@@ -15,7 +15,7 @@ app.use(express.json());
 app.use('/api/auth', require('./routes/auth.js'))
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port} ok that`)
+    console.log(`Example app listening on port ${port}`)
 })
 
 // don't ever pressurise yourself to think too hard it is not good for my mental health

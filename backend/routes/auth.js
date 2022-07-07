@@ -10,6 +10,8 @@ var jwt = require('jsonwebtoken');
 // ?well we will get this jwt secret from a secure place later on but for now let's just hard code it
 const JWT_SECRET = 'mohitcreatinglostandfound';
 
+const fetchuser = require('../middleware/fetchuser')
+
 
 
 // !Create a new user
@@ -48,7 +50,7 @@ router.post('/createuser', [
             email: req.body.email
         });
 
-        // The data to be used in signing our web token is here
+        // !The data to be used in signing our web token is here
 
         const data = {
             user: {
@@ -107,5 +109,20 @@ router.post('/login', [
         res.status(500).send("Internal server error")
     }
 
+})
+
+
+//! Get user data using auth-token thing
+router.get('/getuser',fetchuser,async (req,res)=>{
+    try {
+        userId = req.user.id;
+        // All data except the user password is getting selected here
+        const user = await User.findById(userId).select("-password");
+        res.send(user);
+    
+    } catch (error) {
+        console.log(error);
+        res.status(404).send("Internal server side error");
+    }
 })
 module.exports = router
