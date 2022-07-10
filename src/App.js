@@ -1,11 +1,20 @@
+import Navbar from './components/Navbar';
 import './App.css';
+import ItemMainBox from './components/LHS/ItemMainBox';
+import Buttoncontainer from './components/RHS/Buttoncontainer';
 
 function App() {
+  let Maindisplaystyle={
+    display:'flex'
+  }
   return (
     <>
-      <div>
-        Welcome to the lost and found website
+      <Navbar />
+      <div id='Maindisplay' style={Maindisplaystyle}>
+        <ItemMainBox />
+        <Buttoncontainer />
       </div>
+
     </>
   );
 }

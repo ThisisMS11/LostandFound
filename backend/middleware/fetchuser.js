@@ -9,7 +9,7 @@ const fetchuser=(req,res,next)=>{
 
     try {
         //! verify will return the payload or the data that we sent while creating our user
-
+        
         const data = jwt.verify(token, JWT_SECRET);
 
         // 
@@ -21,3 +21,6 @@ const fetchuser=(req,res,next)=>{
     }
 }
 module.exports = fetchuser;
+
+// what is happening in fetchuser?
+// it is giving us the id of the user using the web token.

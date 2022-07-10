@@ -13,6 +13,7 @@ app.use(express.json());
 
 // For Authentication
 app.use('/api/auth', require('./routes/auth.js'))
+app.use('/api/item',require('./routes/item.js'))
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
