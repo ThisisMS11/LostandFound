@@ -8,9 +8,9 @@ const Navbar = () => {
     }
     return (
         <>
-            <nav class="navbar navbar-expand-lg bg-light d-flex">
-                <div class="d-flex col-12 justify-content-around">
-                    <a class="navbar-brand col-4" to="/">
+            <nav className="navbar navbar-expand-lg bg-light d-flex">
+                <div className="d-flex col-12 justify-content-around">
+                    <a className="navbar-brand col-4" to="/">
                         <img src={images} alt="image not found" style={imagestyle} />
                     </a>
 
@@ -18,9 +18,9 @@ const Navbar = () => {
                         LostandFound
                     </div>
 
-                    <div class="collapse navbar-collapse col-2 d-flex justify-content-end" id="navbarSupportedContent">
-                        <button type="button" class="btn btn-primary mx-2">Login</button>
-                        <button type="button" class="btn btn-primary mx-2">Sign up</button>
+                    <div className="collapse navbar-collapse col-2 d-flex justify-content-end" id="navbarSupportedContent">
+                        <button type="button" className="btn btn-primary mx-2">Login</button>
+                        <button type="button" className="btn btn-primary mx-2">Sign up</button>
                     </div>
                 </div>
             </nav>

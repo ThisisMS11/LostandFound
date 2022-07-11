@@ -13,7 +13,7 @@ const Card = (props) => {
                 <div className="card-body">
 
                     <h5 className="card-title">{Item_Name}</h5>
-                    <span class="badge text-bg-danger position-absolute top-0 end-0">{Category}</span>
+                    <span className="badge text-bg-danger position-absolute top-0 end-0">{Category}</span>
                     <p className="card-text">{Description}</p>
                 </div>
                 <ul className="list-group list-group-flush">
