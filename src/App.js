@@ -14,6 +14,7 @@ import {
 import Signup from './components/Authentication/Signup';
 import ItemState from './components/context/items/ItemState';
 import UserEnteries from './components/User/UserEnteries';
+import Footer from './components/Footer';
 
 function App() {
   let Maindisplaystyle = {
@@ -63,6 +64,8 @@ function App() {
             <Route exact path="/account" element={<UserEnteries/>}></Route>
 
           </Routes>
+
+          <Footer/>
 
 
         </BrowserRouter>
