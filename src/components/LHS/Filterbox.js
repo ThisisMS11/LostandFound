@@ -19,9 +19,9 @@ const Filterbox = () => {
   ]
   return (
     <div id='Filterbox' style={style1} className='d-flex justify-content-around align-items-center'>
-      <Filter dropdownoptions={dropdownoptions[0]}/>
-      <Filter dropdownoptions={dropdownoptions[1]}/>
-      <Filter dropdownoptions={dropdownoptions[2]}/>
+      <Filter dropdownoptions={dropdownoptions[0]} filtername='categoryfilter'/>
+      <Filter dropdownoptions={dropdownoptions[1]} filtername='durationfilter'/>
+      <Filter dropdownoptions={dropdownoptions[2]} filtername='tagfilter'/>
     </div>
   )
 }

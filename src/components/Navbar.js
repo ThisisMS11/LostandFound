@@ -3,12 +3,16 @@ import images from './images/maincollegeimage.png'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Showalert from './Alert'
 
+import itemContext from './context/items/itemcontext'
+import { useContext } from 'react'
+
 const Navbar = (props) => {
 
     let imagestyle = {
         width: '125px',
         height: '80px'
     }
+
 
     const handlelogout = () => {
         localStorage.removeItem('token');
@@ -19,8 +23,7 @@ const Navbar = (props) => {
 
     const navigate = useNavigate();
 
-
-    // for connecting the below and navbar sign up buttons
+    const context = useContext(itemContext);
 
 
 
@@ -43,7 +46,10 @@ const Navbar = (props) => {
                         {!localStorage.getItem('token') ? <div className="d-flex">
                             <Link className="btn btn-primary mx-2" to='/login'>Login</Link>
                             <Link className="btn btn-primary mx-2" to='/signup' ref={props.refClose}>Sign up</Link>
-                        </div> : <button className="btn btn-primary mx-2" onClick={handlelogout}>LogOut</button>}
+                        </div> : <div>
+                            <Link className="btn btn-primary mx-2" to='/account'>My Enteries</Link>
+                            <button className="btn btn-primary mx-2" onClick={handlelogout}>LogOut</button>
+                        </div>}
                     </div>
                 </div>
             </nav>

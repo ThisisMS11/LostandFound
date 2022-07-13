@@ -43,7 +43,7 @@ const UserSchema = new Schema({
         required: true
     },
     Status:{
-        type:Boolean,
+        type:String,
         required:true
     },
     Category:{

@@ -12,6 +12,8 @@ import {
 } from "react-router-dom";
 
 import Signup from './components/Authentication/Signup';
+import ItemState from './components/context/items/ItemState';
+import UserEnteries from './components/User/UserEnteries';
 
 function App() {
   let Maindisplaystyle = {
@@ -28,7 +30,7 @@ function App() {
       msg: message,
       type: type
     })
-    
+
     // using setTimeout we can delete this alert after 1.5 seconds
     setTimeout(() => {
       setAlert(null)
@@ -38,26 +40,33 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
+      <ItemState>
+        <BrowserRouter>
+          <Navbar alerto={alert} showalert={showalert} />
 
-        <Navbar alerto={alert} showalert={showalert}/>
-
-        <Alert alerto={alert} showalert={showalert} />
-
-        <Routes>
-          <Route exact path="/" element={<div id='Maindisplay' style={Maindisplaystyle}>
-            <ItemMainBox />
-            <Buttoncontainer showalert={showalert} />
-          </div>}>
-          </Route>
-
-          <Route exact path="/login" element={<Login showalert={showalert}/>}></Route>
-          <Route exact path="/signup" element={<Signup showalert={showalert} />}></Route>
-
-        </Routes>
+          
 
 
-      </BrowserRouter>
+          <Alert alerto={alert} showalert={showalert} />
+
+          <Routes>
+            <Route exact path="/" element={<div id='Maindisplay' style={Maindisplaystyle}>
+              <ItemMainBox />
+              <Buttoncontainer showalert={showalert} />
+            </div>}>
+            </Route>
+
+            <Route exact path="/login" element={<Login showalert={showalert} />}></Route>
+            <Route exact path="/signup" element={<Signup showalert={showalert} />}></Route>
+
+            {/* for the user related entries and information */}
+            <Route exact path="/account" element={<UserEnteries/>}></Route>
+
+          </Routes>
+
+
+        </BrowserRouter>
+      </ItemState >
 
     </>
   );

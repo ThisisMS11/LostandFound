@@ -1,15 +1,24 @@
-import React, { useState } from 'react'
-// import Filterbox from '../styles/filterBox.css';
+import React, { useState, useContext } from 'react'
+import itemContext from '../context/items/itemcontext';
 
 const Filter = (props) => {
-    let { dropdownoptions } = props;
+    let { dropdownoptions, filtername } = props;
+
+    const context = useContext(itemContext)
+    let {setTag } = context;
 
     const [selectedfilter, setSelectedfilter] = useState(dropdownoptions[0]);
 
-    const filterheadingchanger = (heading) => {
 
+    const filterheadingchanger = (heading) => {
         setSelectedfilter(heading)
+
+        // !using filtername prop to uniquely identify each filter component.
+        if (filtername == 'itemformfilter') {
+            setTag(heading)
+        }
     }
+
     return (
         <>
             <div className="dropdown d-none">
@@ -32,7 +41,7 @@ const Filter = (props) => {
                     {/* iterating the drop down options here  */}
                     {dropdownoptions.map(
                         (e) => {
-                            return <li><a className="dropdown-item" to='/' onClick={()=>filterheadingchanger(e)}>{e}</a></li>;
+                            return <li><a className="dropdown-item" to='/' onClick={() => filterheadingchanger(e)}>{e}</a></li>;
                         }
                     )}
                 </ul>
