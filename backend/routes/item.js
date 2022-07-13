@@ -28,6 +28,7 @@ router.post("/additem", fetchuser, [
         let item = await Item.create({
             Item_Name: req.body.Item_Name,
             Description:req.body.Description,
+            GoogleDriveLink: req.body.GoogleDriveLink,
             User: req.user.id,
             Tag: req.body.Tag,
             Place: req.body.Place,

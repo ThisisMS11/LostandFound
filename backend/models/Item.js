@@ -17,6 +17,10 @@ const UserSchema = new Schema({
         type:String,
         default:'No description provided'
     },
+    GoogleDriveLink:{
+        type:String,
+        default:'No image provided'
+    },
     Tag: {
         type: String,
         required: true,
