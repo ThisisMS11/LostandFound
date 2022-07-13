@@ -129,7 +129,7 @@ const CardsBox = () => {
   // destructuring for better understanding
   // let {Item_Name,Description,Place,Category,Status,Contact_No,Record_date,Time,image1}=Items[0];
   return (
-    <div className='border border-dark container d-flex justify-content-around my-4 flex-wrap overflow-auto' style={boxstyle}>
+    <div className=' container d-flex justify-content-around my-4 flex-wrap overflow-auto' style={boxstyle}>
   
         {/* Iterating the cards information here */}
         {

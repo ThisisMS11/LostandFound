@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import Itemform from './Itemform';
 import Filterbox from '../styles/filterBox.css';
+import { useNavigate } from 'react-router-dom';
 
-const Buttoncontainer = () => {
+
+const Buttoncontainer = (props) => {
     let style1 = {
-        border: 'solid 2px black',
+        // border: 'solid 2px black',
         width: '500px',
         height: '600px',
     }
@@ -13,22 +15,33 @@ const Buttoncontainer = () => {
 
     const [display, setDisplay] = useState('flex');
 
+    const navigate = useNavigate();
+
 
     const shiftscreen = (s) => {
-        setDisplay('none');
-        setFormdisplay({
-            display:'block'
-        })
-        setHead(s)
+        if (localStorage.getItem('token')) {
+            setDisplay('none');
+            setFormdisplay({
+                display: 'block'
+            })
+            setHead(s)
+        }
+        else {
+            props.showalert("you need to login for adding an item","warning")
+            navigate('/login')
+        }
     }
 
+
+
+
     const [formdisplay, setFormdisplay] = useState({
-        display:'none'
+        display: 'none'
     })
 
-    const backtobuttons=()=>{
+    const backtobuttons = () => {
         setFormdisplay({
-            display:'none'
+            display: 'none'
         })
         setDisplay('flex')
     }
@@ -43,13 +56,13 @@ const Buttoncontainer = () => {
 
             {/* item form container */}
             <div style={formdisplay}>
-                <Itemform headingmaterial={head}/>
+                <Itemform headingmaterial={head} />
             </div>
 
             {/* buttons container */}
             <div className={`container d-${display} justify-content-center align-items-center flex-column`}>
-                <button type="button" className={`btn btn-danger my-4`} onClick={()=>shiftscreen('Lost')}>Lost something</button>
-                <button type="button" className={`btn btn-success`} onClick={()=>shiftscreen('Found')}>found something</button>
+                <button type="button" className={`btn btn-danger my-4`} onClick={() => shiftscreen('Lost')}>Lost something</button>
+                <button type="button" className={`btn btn-success`} onClick={() => shiftscreen('Found')}>found something</button>
             </div>
 
         </div>

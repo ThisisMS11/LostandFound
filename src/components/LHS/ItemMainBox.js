@@ -4,7 +4,7 @@ import Filterbox from './Filterbox'
 
 const ItemMainBox = () => {
   let style1 = {
-    border: 'solid 2px black',
+    // border: 'solid 2px black',
     width: '1050px',
     height: '600px'
   }

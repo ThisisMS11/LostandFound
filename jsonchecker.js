@@ -22,3 +22,4 @@ let Items = [
 
 ]
 console.log(Items[0].Description)
+console.log(JSON.stringify(Items[0]))
