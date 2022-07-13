@@ -1,0 +1,69 @@
+.selectedfilterstyle{
+    border-radius:4px;
+    margin: 0px auto;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position:absolute;
+}
+
+/* for the traingle icon */
+#dropdownicon{
+    cursor: pointer;
+}
+/* css for the other color options that would appear in the drop down menu */
+#otheroptionsbox{
+    position:absolute;
+    /* border: solid 3px red; */
+    top:610px;
+    right:175px;
+    width: fit-content;
+    margin: 0px auto;
+    /* border: solid 3px rgb(0, 0, 0); */
+
+}
+.other-option-show{
+    border: solid 2px black;
+    border-radius: 3px;
+    width: 150px;
+    margin: 0px auto;
+}
+.other-option-hide{
+    display: none;
+}
+#name{
+    border: solid 2px rgb(140, 138, 138);
+    padding:0px 5px;
+    border-radius: 4px;
+}
+#otheroptionsbox div:hover{
+    cursor: pointer;
+    background-color: black;
+    color: white;
+}
+
+/* css for the submit button */
+#submitbutton{
+    position: absolute;
+    bottom: 50px;
+    right: 94px;
+}
+#checkbutton{
+    /* border: solid 2px green; */
+    position: absolute;
+    top: 640px;
+    right: 312px;
+}
+
+/* css for the cross icon in buttoncontainer.js*/
+#crossicon{
+    /* border: solid 2px black; */
+    position: absolute;
+    top: 112px;
+    right: 465px;
+    transition: all 0.3s ease-in-out 0.1s;
+}
+#crossicon:hover{
+    transform: scale(1.2);
+}
