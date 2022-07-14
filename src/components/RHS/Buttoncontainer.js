@@ -56,7 +56,7 @@ const Buttoncontainer = (props) => {
 
             {/* item form container */}
             <div style={formdisplay}>
-                <Itemform headingmaterial={head} />
+                <Itemform headingmaterial={head} showalert={props.showalert}/>
             </div>
 
             {/* buttons container */}

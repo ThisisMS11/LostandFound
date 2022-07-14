@@ -48,12 +48,28 @@ router.post("/additem", fetchuser, [
 
 })
 
-router.get('/fetchallitems', fetchuser, async (req, res) => {
+router.get('/fetchalluseritems', fetchuser, async (req, res) => {
     // our middleware fetchuser has put req.user=data.user
     try {
 
         // this will give all the items corresponding tothe user.id
         const items = await Item.find({ User: req.user.id })
+        res.json(items)
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Internal server error")
+    }
+})
+
+
+// fetch all the available items in the collection
+router.get('/', async (req, res) => {
+    // our middleware fetchuser has put req.user=data.user
+    try {
+
+        // this will give all the items corresponding tothe user.id
+        const items = await Item.find();
         res.json(items)
 
     } catch (error) {
@@ -91,7 +107,7 @@ router.put('/updateitem/:id', fetchuser, async (req, res) => {
             res.status(401).send("Not Allowed");
         }
         item = await Item.findByIdAndUpdate(req.params.id, { $set: newitem }, { new: true })
-        res.json({ item });
+        res.json({ success: true, result: "Item successfully updated", item });
 
     } catch (error) {
         console.log(error);
@@ -114,7 +130,7 @@ router.delete('/deleteitem/:id', fetchuser, async (req, res) => {
         }
 
         item = await Item.findByIdAndDelete(req.params.id);
-        res.json({ "response": "deletion successful", item: item })
+        res.json({ success: true, result: "Item successfully deleted", item });
 
     } catch (error) {
         console.log(error);

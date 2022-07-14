@@ -23,26 +23,31 @@ const Itemform = (props) => {
         setItem({ ...item, [e.target.name]: e.target.value })
     }
 
-    const handlesubmit = (e) => {
+    const handlesubmit = async (e) => {
         e.preventDefault();
-        
+
         // correcting status error checked = 'on' , not checked = 'off'
         if (item.Status == "") {
             item.Status = "off"
         }
-        
-        
+
+
         // giving category based on buttonclick via prop obtained i.e. head props.headingmaterial
         item.Category = props.headingmaterial;
-        
+
         // setting the tag here by fetching it from our context api
-        item.Tag=tag;
-        
+        item.Tag = tag;
+
         // Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink
         console.log("Item info :--->>>> ", item);
-        let {Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink}=item;
-        
-        additem(Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink);
+        let { Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink } = item;
+
+        const answer = await additem(Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink);
+
+        if(answer.success){
+            props.showalert('Item added sucessfully','success')
+        }
+
     }
 
     return (
