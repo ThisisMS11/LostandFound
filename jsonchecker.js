@@ -21,5 +21,32 @@ let Items = [
 
 
 ]
-console.log(Items[0].Description)
-console.log(JSON.stringify(Items[0]))
+// console.log(Items[0].Description)
+// console.log(JSON.stringify(Items[0]))
+
+const link = 'https://drive.google.com/file/d/144Rsd4FUiPGn1WyNC6ku-rB5bM6dssWt/view?usp=sharing';
+
+console.log(link.length)
+
+
+const giveid = (link) => {
+    let id = '';
+    for (let i = 0; i < link.length; i++) {
+        const element = link[i];
+        if (element == 'd') {
+            if (link[i + 1] == '/') {
+                for (let j = i + 2; j < link.length; j++) {
+                    if (link[j] == '/') {
+                        break;
+                    }
+                    id = id + link[j];
+                }
+            }
+        }
+    }
+    return id;
+}
+
+console.log("our id from function is",giveid(link))
+
+

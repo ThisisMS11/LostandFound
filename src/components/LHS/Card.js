@@ -5,11 +5,11 @@ const Card = (props) => {
         width: '18rem'
     }
 
-    let { Item_Name, Description, Place, Time, Record_date, Contact_No, Status, Category ,image1} = props;
+    let { Item_Name, Description, Place, Time, Record_date, Contact_No, Status, Category, imageid } = props;
     return (
         <>
             <div className="card my-2" style={style1}>
-                <img src={`https://source.unsplash.com/500x300/?${image1}`} className="card-img-top" alt="Image not found" />
+                <img src={`https://drive.google.com/uc?export=view&id=${imageid}`} className="card-img-top" alt="Image not found" />
                 {/* <img src="https://drive.google.com/uc?export=view&id=1AaEdVBlbUPUzzvwHTlnIRTic4X0YSEWK" className="card-img-top" alt="drive image"/> */}
 
                 <div className="card-body">

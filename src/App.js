@@ -61,7 +61,7 @@ function App() {
             <Route exact path="/signup" element={<Signup showalert={showalert} />}></Route>
 
             {/* for the user related entries and information */}
-            <Route exact path="/account" element={<UserEnteries/>}></Route>
+            <Route exact path="/account" element={<UserEnteries showalert={showalert} />}></Route>
 
           </Routes>
 

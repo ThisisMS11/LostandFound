@@ -88,7 +88,7 @@ const Itemform = (props) => {
                     {/* For the sake of tag */}
 
                     <div className="d-flex justify-content-around">
-                        <Filter dropdownoptions={dropdownoptions[0]} filtername='itemformfilter' />
+                        <Filter dropdownoptions={dropdownoptions[0]} filtername='itemformfilter' initialvalue={dropdownoptions[0][1]}/>
 
                         <div className="mb-3 form-check my-2">
                             <label className="form-check-label" for="exampleCheck1">Status</label>

@@ -11,6 +11,9 @@ const ItemState = (props) => {
 
     const [tag, setTag] = useState();
 
+    // variable for resetting the category in update modal
+    const [resettag, setResettag] = useState();
+
 
     const iteminitial = [];
 
@@ -56,6 +59,9 @@ const ItemState = (props) => {
             },
         });
         const json = await response.json();
+        // if (json == []) {
+        //     console.log('no enteries')
+        // }
         setitem(json)
     }
 
@@ -67,10 +73,10 @@ const ItemState = (props) => {
         });
         const json = await response.json();
 
-        setallitem(json)
+        setallitem(json);
     }
 
-    const deleteitem = async (id) => {
+    const deleteitem = async (id, showalert) => {
         const response = await fetch(`${host}/api/item/deleteitem/${id}`, {
             method: 'DELETE',
             headers: {
@@ -78,6 +84,13 @@ const ItemState = (props) => {
             }
         });
         const json = await response.json();
+
+        let item_Item_Name = json.item.Item_Name;
+
+        if (json.success) {
+            showalert(`${item_Item_Name} successfully deleted`, 'success')
+        }
+
         const newitems = item.filter((item) => { return item._id !== id })
 
         const allnewitems = allitem.filter((item) => { return item._id !== id })
@@ -88,9 +101,50 @@ const ItemState = (props) => {
         setallitem(allnewitems)
     }
 
+    //context api for updating the item 
+    const updateitem = async (id, Item_Name, Description, Place, Tag, Time, Contact_No, Status, Category, GoogleDriveLink, showalert) => {
+
+        // API call for fetching data
+        const response = await fetch(`${host}/api/item/updateitem/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': localStorage.getItem('token')
+            },
+            body: JSON.stringify({ Item_Name, Description, Place, Tag, Time, Contact_No, Status, Category, GoogleDriveLink })
+        });
+        const json = await response.json();
+
+        // it will create a deep copy
+        let newItem = JSON.parse(JSON.stringify(item))
+
+        console.log('the newItem is ', newItem)
+        //! upto this point the entry in the database has been updated but the variables used for obtaining the notes are still the same so to update those as well we do the following:-
+
+
+        //finding the note and updating it.
+        for (let index = 0; index < newItem.length; index++) {
+            let element = newItem[index];
+            if (element._id == id) {
+                element.Item_Name = Item_Name
+                element.Description = Description
+                element.Place = Place
+                element.Tag = Tag
+                element.Time = Time
+                element.Contact_No = Contact_No
+                element.Status = Status
+                element.Category = Category
+                element.GoogleDriveLink = GoogleDriveLink
+                break;
+            }
+        }
+
+        setitem(newItem)
+    }
+
 
     return (
-        <ItemContext.Provider value={{ additem, tag, setTag, getitems, item, allitem, getallitems, deleteitem }}>
+        <ItemContext.Provider value={{ additem, tag, setTag, getitems, item, allitem, getallitems, deleteitem, updateitem, resettag, setResettag }}>
             {props.children}
         </ItemContext.Provider>
     )

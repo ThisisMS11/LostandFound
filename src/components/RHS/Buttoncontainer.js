@@ -6,9 +6,10 @@ import { useNavigate } from 'react-router-dom';
 
 const Buttoncontainer = (props) => {
     let style1 = {
-        // border: 'solid 2px black',
+        border: "solid 1px #d5cfcf",
+        borderRadius: '10px',
         width: '500px',
-        height: '600px',
+        height: '595px',
     }
 
     // !the below usestate are for shifting the screen between buttons and form
@@ -27,7 +28,7 @@ const Buttoncontainer = (props) => {
             setHead(s)
         }
         else {
-            props.showalert("you need to login for adding an item","warning")
+            props.showalert("you need to login for adding an item", "warning")
             navigate('/login')
         }
     }
@@ -56,7 +57,7 @@ const Buttoncontainer = (props) => {
 
             {/* item form container */}
             <div style={formdisplay}>
-                <Itemform headingmaterial={head} showalert={props.showalert}/>
+                <Itemform headingmaterial={head} showalert={props.showalert} />
             </div>
 
             {/* buttons container */}

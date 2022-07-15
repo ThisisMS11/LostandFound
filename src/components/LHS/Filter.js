@@ -2,12 +2,14 @@ import React, { useState, useContext } from 'react'
 import itemContext from '../context/items/itemcontext';
 
 const Filter = (props) => {
-    let { dropdownoptions, filtername } = props;
+    let { dropdownoptions, filtername, initialvalue } = props;
 
     const context = useContext(itemContext)
-    let {setTag } = context;
+    let { setTag, setResettag } = context;
 
-    const [selectedfilter, setSelectedfilter] = useState(dropdownoptions[0]);
+
+    // here are setting the initial display value of each filter.
+    const [selectedfilter, setSelectedfilter] = useState(initialvalue);
 
 
     const filterheadingchanger = (heading) => {
@@ -16,6 +18,9 @@ const Filter = (props) => {
         // !using filtername prop to uniquely identify each filter component.
         if (filtername == 'itemformfilter') {
             setTag(heading)
+        }
+        else if (filtername == 'modalupdatefilter') {
+            setResettag(heading)
         }
     }
 

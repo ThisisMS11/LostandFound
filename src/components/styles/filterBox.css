@@ -67,3 +67,10 @@
 #crossicon:hover{
     transform: scale(1.2);
 }
+
+/* css for the update and delete buttons in UserEnteries.js */
+.dandu:hover{
+    color:#d5cfcf;
+    cursor: pointer;
+    opacity: 0.5;
+}

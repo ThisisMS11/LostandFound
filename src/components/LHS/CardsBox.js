@@ -4,8 +4,9 @@ import itemContext from '../context/items/itemcontext'
 
 const CardsBox = () => {
   let boxstyle = {
-    height: '522px'
-    // border:"solid 2px black"
+    height: '522px',
+    border: "solid 1px #d5cfcf",
+    borderRadius: '10px',
   }
 
   const context = useContext(itemContext);
@@ -29,7 +30,7 @@ const CardsBox = () => {
       {
         // allitem contains all the items present in our database added by all different users
         allitem.map((e) => {
-          return <div className='mx-3'><Card image1={e.Tag} Item_Name={e.Item_Name} User={e.User} Description={e.Description} Place={e.Place} Category={e.Category} Contact_No={e.Contact_No} Status={e.Status} Record_date={e.Record_date} Time={e.Time} /> </div>
+          return <div className='mx-3'><Card imageid={e.GoogleDriveLink} Item_Name={e.Item_Name} User={e.User} Description={e.Description} Place={e.Place} Category={e.Category} Contact_No={e.Contact_No} Status={e.Status} Record_date={e.Record_date} Time={e.Time} /> </div>
 
         })
       }

@@ -4,6 +4,25 @@ const fetchuser = require('../middleware/fetchuser')
 const { body, validationResult } = require('express-validator');
 const router = express.Router();
 
+
+// this is to obtain the image id from google drive link .
+const giveid = (link) => {
+    let id = '';
+    for (let i = 0; i < link.length; i++) {
+        const element = link[i];
+        if (element == 'd') {
+            if (link[i + 1] == '/') {
+                for (let j = i + 2; j < link.length; j++) {
+                    if (link[j] == '/') {
+                        break;
+                    }
+                    id = id + link[j];
+                }
+            }
+        }
+    }
+    return id;
+}
 // here we are adding the item to our database
 router.post("/additem", fetchuser, [
     body('Item_Name', 'Enter a valid name').isLength({ min: 5 }),
@@ -28,7 +47,7 @@ router.post("/additem", fetchuser, [
         let item = await Item.create({
             Item_Name: req.body.Item_Name,
             Description: req.body.Description,
-            GoogleDriveLink: req.body.GoogleDriveLink,
+            GoogleDriveLink: giveid(req.body.GoogleDriveLink),
             User: req.user.id,
             Tag: req.body.Tag,
             Place: req.body.Place,
@@ -67,7 +86,6 @@ router.get('/fetchalluseritems', fetchuser, async (req, res) => {
 router.get('/', async (req, res) => {
     // our middleware fetchuser has put req.user=data.user
     try {
-
         // this will give all the items corresponding tothe user.id
         const items = await Item.find();
         res.json(items)
@@ -122,7 +140,7 @@ router.delete('/deleteitem/:id', fetchuser, async (req, res) => {
     if (!item) {
         res.status(404).send("Not found ");
     }
-    
+
     try {
         //checking whether the user trying to update the note is the same as the one who created it.
         if (item.User.toString() !== req.user.id) {
