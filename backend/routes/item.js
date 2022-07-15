@@ -30,7 +30,7 @@ router.post("/additem", fetchuser, [
     body('Place', 'Enter a Valid place Name').isLength({ min: 8 }),
     body('Time', 'Please Input Time and Date').exists(),
     //? check whether the entered number is a correct phone number or not...
-    body('Contact_No', 'Enter a valid contact number').isMobilePhone(),
+    // body('Contact_No', 'Enter a valid contact number').isMobilePhone(),
     body('Status', 'Enter current status of the Item').exists(),
     body('Category', 'Lost / Found').exists(),
 ], async (req, res) => {
@@ -47,7 +47,7 @@ router.post("/additem", fetchuser, [
         let item = await Item.create({
             Item_Name: req.body.Item_Name,
             Description: req.body.Description,
-            GoogleDriveLink: giveid(req.body.GoogleDriveLink),
+            GoogleDriveLink: req.body.GoogleDriveLink,
             User: req.user.id,
             Tag: req.body.Tag,
             Place: req.body.Place,
@@ -58,7 +58,7 @@ router.post("/additem", fetchuser, [
             Category: req.body.Category
         });
 
-        res.json({ success: true, result: "Item successfully added into the List", item });
+        res.json(item);
 
     } catch (error) {
         res.status(404).json({ success: false, msg: 'Internal Server Side error', error })

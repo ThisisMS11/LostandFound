@@ -10,16 +10,16 @@ const CardsBox = () => {
   }
 
   const context = useContext(itemContext);
-  let { allitem, getallitems } = context;
+  let { allitem, getallitems, giveid } = context;
 
 
   // !fetching all the notes here
   // whenever getallitems would change anywhere in the react app this useeffect would trigger itself.
   useEffect(() => {
     getallitems();
-    // console.log('here are all the items',allitem);
-  }, [getallitems])
-
+  }, [])
+  
+  // console.log('here are all the items',allitem);
 
 
 
@@ -30,7 +30,7 @@ const CardsBox = () => {
       {
         // allitem contains all the items present in our database added by all different users
         allitem.map((e) => {
-          return <div className='mx-3'><Card imageid={e.GoogleDriveLink} Item_Name={e.Item_Name} User={e.User} Description={e.Description} Place={e.Place} Category={e.Category} Contact_No={e.Contact_No} Status={e.Status} Record_date={e.Record_date} Time={e.Time} /> </div>
+          return <div className='mx-3'><Card imageid={giveid(e.GoogleDriveLink)} Item_Name={e.Item_Name} User={e.User} Description={e.Description} Place={e.Place} Category={e.Category} Contact_No={e.Contact_No} Status={e.Status} Record_date={e.Record_date} Time={e.Time} /> </div>
 
         })
       }
@@ -40,4 +40,4 @@ const CardsBox = () => {
   )
 }
 
-export default CardsBox
+export default React.memo(CardsBox);

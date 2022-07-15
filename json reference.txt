@@ -1,0 +1,116 @@
+let Items = [
+    {
+        "_id": {
+            "$oid": "62ca583abd085c07f814f84f"
+        },
+        "Item_Name": "Samsung F-12",
+        "User": {
+            "$oid": "62c6c4c8bbdec4e1e9d72a44"
+        },
+        "image1": "smartphone",
+        "Description": "Has a Google Sticker at the back of the cover",
+        "Tag": "smartphone",
+        "Place": "near ojas canteen h3 hostel",
+        "Time": "Mon, 11 oct 2022 17:28:35",
+        "Record_date": "10/7/2022, 10:10:24 am",
+        "Contact_No": 9680453581,
+        "Status": true,
+        "Category": "Lost",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "62ca583abd085c07f814f84f"
+        },
+        "Item_Name": "Gaming pad Far-12",
+        "User": {
+            "$oid": "62c6c4c8bbdec4e1e9d72a44"
+        },
+        "Description": "i had decided to play free fire with my friends but i lost it.",
+        "image1": "joystick",
+        "Tag": "electronics",
+        "Place": "near ojas canteen h3 hostel",
+        "Time": "Mon, 11 oct 2022 17:28:35",
+        "Record_date": "10/7/2022, 10:10:24 am",
+        "Contact_No": 9680453581,
+        "Status": true,
+        "Category": "Lost",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "62ca583abd085c07f814f84f"
+        },
+        "Item_Name": "Google cap",
+        "User": {
+            "$oid": "62c6c4c8bbdec4e1e9d72a44"
+        },
+        "Description": "parcelpants written on it.",
+        "image1": "cap",
+        "Tag": "clothing",
+        "Place": "cricket ground in front of h3 hostel",
+        "Time": "Mon, 11 oct 2022 17:28:35",
+        "Record_date": "10/7/2022, 10:10:24 am",
+        "Contact_No": 8100453581,
+        "Status": true,
+        "Category": "Lost",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "62ca583abd085c07f814f84f"
+        },
+        "Item_Name": "Samsung neckband",
+        "User": {
+            "$oid": "62c6c4c8bbdec4e1e9d72a44"
+        },
+        "Description": "has a red spot over it boats rockers ",
+        "image1": "neckband",
+        "Tag": "earphones",
+        "Place": "near tinkering lab ",
+        "Time": "Mon, 11 oct 2022 17:28:35",
+        "Record_date": "10/7/2022, 10:10:24 am",
+        "Contact_No": 7854584451,
+        "Status": true,
+        "Category": "Lost",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "62ca583abd085c07f814f84f"
+        },
+        "Item_Name": "Tesla car",
+        "User": {
+            "$oid": "62c6c4c8bbdec4e1e9d72a44"
+        },
+        "Description": "has the plate no xxxx 20022",
+        "image1": "car",
+        "Tag": "car",
+        "Place": "near h3 hostel parked at hexagon",
+        "Time": "Mon, 11 oct 2022 17:28:35",
+        "Record_date": "10/7/2022, 10:10:24 am",
+        "Contact_No": 9610243581,
+        "Status": true,
+        "Category": "Lost",
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "62ca583abd085c07f814f84f"
+        },
+        "Item_Name": "Apple Watch",
+        "User": {
+            "$oid": "62c6c4c8bbdec4e1e9d72a44"
+        },
+        "Description": "White in color along with some ayush name written on it",
+        "image1": "smartwatch",
+        "Tag": "watch",
+        "Place": "at physics lab hexagon canteen",
+        "Time": "Mon, 11 oct 2022 17:28:35",
+        "Record_date": "10/7/2022, 10:10:24 am",
+        "Contact_No": 9120453581,
+        "Status": true,
+        "Category": "Lost",
+        "__v": 0
+    },
+]

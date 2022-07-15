@@ -24,6 +24,24 @@ const ItemState = (props) => {
     //! variable for all user's all notes to be displayed on the CardsBox.js
     const [allitem, setallitem] = useState([]);
 
+    const giveid = (link) => {
+        let id = '';
+        for (let i = 0; i < link.length; i++) {
+            const element = link[i];
+            if (element == 'd') {
+                if (link[i + 1] == '/') {
+                    for (let j = i + 2; j < link.length; j++) {
+                        if (link[j] == '/') {
+                            break;
+                        }
+                        id = id + link[j];
+                    }
+                }
+            }
+        }
+        return id;
+    }
+
 
 
     const host = 'http://localhost:4501';
@@ -144,7 +162,7 @@ const ItemState = (props) => {
 
 
     return (
-        <ItemContext.Provider value={{ additem, tag, setTag, getitems, item, allitem, getallitems, deleteitem, updateitem, resettag, setResettag }}>
+        <ItemContext.Provider value={{ additem, tag, setTag, getitems, item, allitem, getallitems, deleteitem, updateitem, resettag, setResettag, giveid }}>
             {props.children}
         </ItemContext.Provider>
     )

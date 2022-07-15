@@ -10,7 +10,7 @@ const UserEnteries = (props) => {
     let { showalert } = props;
 
     const context = useContext(itemContext);
-    let { getitems, item, deleteitem, updateitem, resettag } = context;
+    let { getitems, item, deleteitem, updateitem, resettag, giveid } = context;
 
     // improvement can be there but for now 
     let dropdownoptions = [
@@ -21,7 +21,7 @@ const UserEnteries = (props) => {
     // whenever the UserEnteries component would render itself ,code inside of the useeffect would run.
     useEffect(() => {
         getitems();
-    }, [item])
+    }, [])
 
 
     // reference variable for opening the modal
@@ -141,7 +141,7 @@ const UserEnteries = (props) => {
                 {
                     // !item contains all the user notes in json format
                     item.map((e) => {
-                        return <div className='mx-4'><Card imageid={e.GoogleDriveLink} Item_Name={e.Item_Name} User={e.User} Description={e.Description} Place={e.Place} Category={e.Category} Contact_No={e.Contact_No} Status={e.Status} Record_date={e.Record_date} Time={e.Time} />
+                        return <div className='mx-4'><Card imageid={giveid(e.GoogleDriveLink)} Item_Name={e.Item_Name} User={e.User} Description={e.Description} Place={e.Place} Category={e.Category} Contact_No={e.Contact_No} Status={e.Status} Record_date={e.Record_date} Time={e.Time} />
                             <div className="d-flex justify-content-around border border-dark py-2 rounded opacity-75">
                                 {/* <button className="btn btn-primary">Delete</button>
                             <button className="btn btn-primary">Update</button> */}

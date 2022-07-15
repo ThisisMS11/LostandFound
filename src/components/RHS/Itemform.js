@@ -39,7 +39,7 @@ const Itemform = (props) => {
         item.Tag = tag;
 
         // Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink
-        console.log("Item info :--->>>> ", item);
+        // console.log("Item info :--->>>> ", item);
         let { Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink } = item;
 
         const answer = await additem(Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink);
@@ -56,30 +56,30 @@ const Itemform = (props) => {
             <div>
                 <form >
                     <div className="mb-3">
-                        <label for="Item_Name" className="form-label">Item Name</label>
+                        <label htmlFor="Item_Name" className="form-label">Item Name</label>
                         <input type="text" className="form-control" id="Item_Name" aria-describedby="emailHelp" name='Item_Name' onChange={onChange} />
                     </div>
 
                     <div className="mb-3">
-                        <label for="Description" className="form-label">Description</label>
+                        <label htmlFor="Description" className="form-label">Description</label>
                         <input type="text" className="form-control" id="Description" name='Description' onChange={onChange} />
                     </div>
                     <div className="mb-3">
-                        <label for="Place" className="form-label">Place</label>
+                        <label htmlFor="Place" className="form-label">Place</label>
                         <input type="text" className="form-control" id="Place" name='Place' onChange={onChange} />
                     </div>
                     <div className="mb-3">
-                        <label for="GoogleDriveLink" className="form-label">GoogleDrive Link</label>
+                        <label htmlFor="GoogleDriveLink" className="form-label">GoogleDrive Link</label>
                         <input type="text" className="form-control" id="GoogleDriveLink" aria-describedby="emailHelp" placeholder='Paste GoogleDrive Photo Link here' name='GoogleDriveLink' onChange={onChange} />
                     </div>
 
                     <div className="mb-3">
-                        <label for="Time" className='mx-4'>Time</label>
+                        <label htmlFor="Time" className='mx-4'>Time</label>
                         <input type="datetime-local" id="Time" name="Time" onChange={onChange} />
                     </div>
 
                     <div className="mb-3">
-                        <label for="Contact_no" className='mx-2'>Contact no.</label>
+                        <label htmlFor="Contact_no" className='mx-2'>Contact no.</label>
                         <input type="number" id="Contact_no" name="Contact_No" onChange={onChange} />
                     </div>
 
@@ -91,7 +91,7 @@ const Itemform = (props) => {
                         <Filter dropdownoptions={dropdownoptions[0]} filtername='itemformfilter' initialvalue={dropdownoptions[0][1]}/>
 
                         <div className="mb-3 form-check my-2">
-                            <label className="form-check-label" for="exampleCheck1">Status</label>
+                            <label className="form-check-label" htmlFor="exampleCheck1">Status</label>
                             <input type="checkbox" className="form-check-input" id="exampleCheck1" name="Status" onChange={onChange} />
                         </div>
 
