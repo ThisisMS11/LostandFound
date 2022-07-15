@@ -5,9 +5,13 @@ import itemContext from '../context/items/itemcontext'
 const Itemform = (props) => {
 
     // dropdownoptions for form tag part
+
+    let { closeform, showalert, headingmaterial } = props;
     let dropdownoptions = [
         ['general', 'smartphones', 'documents', 'clothing', 'electronics', 'money']
     ]
+
+    const forminputs = ['Item_Name', 'Description', 'Place', 'GoogleDriveLink', 'Time', 'Contact_No']
 
     // using the item context api here
     const context = useContext(itemContext)
@@ -23,6 +27,13 @@ const Itemform = (props) => {
         setItem({ ...item, [e.target.name]: e.target.value })
     }
 
+    const clear = () => {
+        forminputs.forEach(e => {
+            const input = document.getElementById(e)
+            input.value = "";
+        });
+    }
+
     const handlesubmit = async (e) => {
         e.preventDefault();
 
@@ -33,7 +44,7 @@ const Itemform = (props) => {
 
 
         // giving category based on buttonclick via prop obtained i.e. head props.headingmaterial
-        item.Category = props.headingmaterial;
+        item.Category = headingmaterial;
 
         // setting the tag here by fetching it from our context api
         item.Tag = tag;
@@ -44,15 +55,19 @@ const Itemform = (props) => {
 
         const answer = await additem(Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink);
 
-        if(answer.success){
-            props.showalert('Item added sucessfully','success')
+        if (answer.success) {
+            showalert('Item added sucessfully', 'success')
+
+            // closing the form here by using useRef variable.
+            closeform.current.click();
+            clear();
         }
 
     }
 
     return (
         <>
-            <h2 className="text-center my-2">{props.headingmaterial} Something</h2>
+            <h2 className="text-center my-2">{headingmaterial} Something</h2>
             <div>
                 <form >
                     <div className="mb-3">
@@ -79,8 +94,8 @@ const Itemform = (props) => {
                     </div>
 
                     <div className="mb-3">
-                        <label htmlFor="Contact_no" className='mx-2'>Contact no.</label>
-                        <input type="number" id="Contact_no" name="Contact_No" onChange={onChange} />
+                        <label htmlFor="Contact_No" className='mx-2'>Contact no.</label>
+                        <input type="number" id="Contact_No" name="Contact_No" onChange={onChange} />
                     </div>
 
 
@@ -88,7 +103,7 @@ const Itemform = (props) => {
                     {/* For the sake of tag */}
 
                     <div className="d-flex justify-content-around">
-                        <Filter dropdownoptions={dropdownoptions[0]} filtername='itemformfilter' initialvalue={dropdownoptions[0][1]}/>
+                        <Filter dropdownoptions={dropdownoptions[0]} filtername='itemformfilter' initialvalue={dropdownoptions[0][1]} />
 
                         <div className="mb-3 form-check my-2">
                             <label className="form-check-label" htmlFor="exampleCheck1">Status</label>

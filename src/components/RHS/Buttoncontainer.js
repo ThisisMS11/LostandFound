@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useRef } from 'react'
 import Itemform from './Itemform';
 import Filterbox from '../styles/filterBox.css';
 import { useNavigate } from 'react-router-dom';
@@ -50,14 +50,16 @@ const Buttoncontainer = (props) => {
 
     const [head, setHead] = useState();
 
+    const closeform = useRef(null);
+
     return (
         <div style={style1} className='d-flex justify-content-center align-items-center'>
-            <i className="fa-solid fa-xmark fa-2x" id='crossicon' style={formdisplay} onClick={backtobuttons}></i>
+            <i className="fa-solid fa-xmark fa-2x" id='crossicon' ref={closeform} style={formdisplay} onClick={backtobuttons}></i>
 
 
             {/* item form container */}
             <div style={formdisplay}>
-                <Itemform headingmaterial={head} showalert={props.showalert} />
+                <Itemform headingmaterial={head} showalert={props.showalert} closeform={closeform}/>
             </div>
 
             {/* buttons container */}

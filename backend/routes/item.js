@@ -58,7 +58,7 @@ router.post("/additem", fetchuser, [
             Category: req.body.Category
         });
 
-        res.json(item);
+        res.json({ success: true, msg: 'Internal Server Side error', item });
 
     } catch (error) {
         res.status(404).json({ success: false, msg: 'Internal Server Side error', error })

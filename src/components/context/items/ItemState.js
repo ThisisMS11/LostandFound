@@ -48,7 +48,7 @@ const ItemState = (props) => {
 
 
     // Adding iteminfo to our database
-    const additem = async (Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink) => {
+    const additem = async (Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink,showalert) => {
         const response = await fetch(`${host}/api/item/additem`, {
             method: 'POST',
             headers: {
@@ -59,9 +59,11 @@ const ItemState = (props) => {
         });
         const json = await response.json();
 
-        setallitem(allitem.concat(json))
 
-        setitem(item.concat(json))
+        // ! adding the new item with the already present ones here
+        setallitem(allitem.concat(json.item))
+
+        setitem(item.concat(json.item))
 
         return json;
     }
