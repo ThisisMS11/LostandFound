@@ -39,13 +39,10 @@ const Card = (props) => {
                         <div className="">{Place}</div>
                     </li>
                     <li className="list-group-item d-flex justify-content-between align-items-center ">
-                        <div className='fw-semibold'>Time:</div>
+                        <div className='fw-semibold'>Date:</div>
                         <div className="">{Time}</div>
                     </li>
-                    <li className="list-group-item d-flex justify-content-between align-items-center ">
-                        <div className='fw-semibold'>Recorded:</div>
-                        <div className="">{Record_date}</div>
-                    </li>
+                    
                     <li className="list-group-item d-flex justify-content-between align-items-center ">
                         <div className='fw-semibold'>Contact_No:</div>
                         <div className="">{Contact_No}</div>
@@ -53,6 +50,10 @@ const Card = (props) => {
                     <li className="list-group-item d-flex justify-content-between align-items-center ">
                         <div className='fw-semibold'>Status:</div>
                         <div className="">{Status}</div>
+                    </li>
+                    <li className="list-group-item d-flex justify-content-between align-items-center ">
+                        <div className='fw-semibold'>Recorded:</div>
+                        <div className="">{Record_date}</div>
                     </li>
                 </ul>
             </div>

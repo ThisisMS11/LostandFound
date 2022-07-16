@@ -89,8 +89,8 @@ const Itemform = (props) => {
                     </div>
 
                     <div className="mb-3">
-                        <label htmlFor="Time" className='mx-4'>Time</label>
-                        <input type="datetime-local" id="Time" name="Time" onChange={onChange} />
+                        <label htmlFor="Time" className='mx-4'>Date</label>
+                        <input type="date" id="Time" name="Time" onChange={onChange} />
                     </div>
 
                     <div className="mb-3">

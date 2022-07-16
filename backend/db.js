@@ -1,5 +1,9 @@
 const mongoose=require('mongoose');
-const mongouri="mongodb://localhost:27017/LostandFound?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false";
+const mongouri="mongodb+srv://Mohitlostandfound:caps111002@cluster0.n1fwaei.mongodb.net/LostandFound?retryWrites=true&w=majority";
+
+
+//! to connect with mongoDB compass
+// mongodb://localhost:27017/LostandFound?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false
 
 const connectTomongo=()=>{
     mongoose.connect(mongouri,()=>{
