@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useContext,useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
+import itemContext from '../context/items/itemcontext';
 
 const Signup = (props) => {
 
@@ -9,11 +10,22 @@ const Signup = (props) => {
 
     const navigate = useNavigate();
 
+
+    const context = useContext(itemContext);
+    const { setprogress } = context;
+
+    useEffect(() => {
+        setprogress(99)
+        setTimeout(() => {
+            setprogress(100)
+        }, 50);
+    }, [])
+
     const handlesubmit = async (e) => {
 
         e.preventDefault();
         if (password === cpassword) {
-
+            setprogress(30)
             const response = await fetch("http://localhost:4501/api/auth/createuser", {
                 method: 'POST',
                 headers: {
@@ -23,6 +35,7 @@ const Signup = (props) => {
             });
 
             // json contains success msg and auth-token
+            setprogress(80)
             const json = await response.json();
 
             // saving the authtoken
@@ -39,6 +52,7 @@ const Signup = (props) => {
         else {
             props.showalert("confirm password did not match", 'danger')
         }
+        setprogress(100)
 
     }
 

@@ -1,6 +1,7 @@
-import React, { useState,useRef } from 'react'
+import React, { useState, useRef, useContext ,useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar';
+import itemContext from '../context/items/itemcontext';
 
 const Login = (props) => {
     const [credentials, setCredentials] = useState({ email: "", password: "" })
@@ -11,6 +12,17 @@ const Login = (props) => {
 
     // login button text
 
+    const context = useContext(itemContext);
+    const { setprogress} = context;
+
+    useEffect(() => {
+        setprogress(99)
+        setTimeout(() => {
+            setprogress(100)
+        }, 50);
+    }, [])
+    
+
 
 
     const handlesubmit = async (e) => {
@@ -18,6 +30,7 @@ const Login = (props) => {
         // ! upper upper ki information do baaki kaam backend mai hoga...
         // without this the page would reload which we don't want obviously 
         e.preventDefault();
+        setprogress(30)
         const response = await fetch("http://localhost:4501/api/auth/login", {
             method: 'POST',
             headers: {
@@ -25,7 +38,7 @@ const Login = (props) => {
             },
             body: JSON.stringify({ email: credentials.email, password: credentials.password })
         });
-
+        setprogress(80)
         // json contains success msg and auth token
         const json = await response.json();
 
@@ -43,6 +56,8 @@ const Login = (props) => {
             setHider('flex')
             props.showalert("Login Failed", 'danger')
         }
+
+        setprogress(100)
     }
 
 
@@ -61,10 +76,10 @@ const Login = (props) => {
 
     return (
         <>
-        <div className="d-none">
+            <div className="d-none">
 
-            <Navbar refClose={refClose}/>
-        </div>
+                <Navbar refClose={refClose} />
+            </div>
 
 
             <div className="container">

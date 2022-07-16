@@ -22,6 +22,8 @@ const CardsBox = () => {
   
   // console.log('here are all the items',allitem);
 
+  // the data has to be filtered here
+
 
 
   return (
@@ -42,3 +44,5 @@ const CardsBox = () => {
 }
 
 export default React.memo(CardsBox);
+
+// allitems json has to be filtered for displaying the filter relevant over the screen

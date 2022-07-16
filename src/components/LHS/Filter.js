@@ -5,7 +5,7 @@ const Filter = (props) => {
     let { dropdownoptions, filtername, initialvalue } = props;
 
     const context = useContext(itemContext)
-    let { setTag, setResettag } = context;
+    let { setTag, setResettag, setcategoryfilter, setdurationfilter, settagfilter } = context;
 
 
     // here are setting the initial display value of each filter.
@@ -21,6 +21,15 @@ const Filter = (props) => {
         }
         else if (filtername == 'modalupdatefilter') {
             setResettag(heading)
+        }
+        else if (filtername == 'categoryfilter') {
+            setcategoryfilter(heading)
+        }
+        else if (filtername == 'durationfilter') {
+            setdurationfilter(heading)
+        }
+        else if (filtername == 'tagfilter') {
+            settagfilter(heading)
         }
     }
 

@@ -5,6 +5,7 @@ import Showalert from './Alert'
 
 import itemContext from './context/items/itemcontext'
 import { useContext } from 'react'
+import LoadingBar from 'react-top-loading-bar'
 
 const Navbar = (props) => {
 
@@ -23,13 +24,18 @@ const Navbar = (props) => {
 
     const navigate = useNavigate();
 
+
+
     const context = useContext(itemContext);
-
-
-
+    const { progress, setprogress } = context;
 
     return (
         <>
+            <LoadingBar
+                color='#f11946'
+                height={3}
+                progress={progress}
+            />
             <nav className="navbar navbar-expand-lg bg-light d-flex">
                 <div className="d-flex col-12 justify-content-around">
                     <Link className="navbar-brand col-4" to="/">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Component, useState } from 'react'
 import ItemContext from './itemcontext'
 const ItemState = (props) => {
 
@@ -16,6 +16,14 @@ const ItemState = (props) => {
 
 
     const iteminitial = [];
+
+
+
+    // !variables for obtaining real time filter values from filterbox Component.
+
+    const [categoryfilter, setcategoryfilter] = useState();
+    const [durationfilter, setdurationfilter] = useState();
+    const [tagfilter, settagfilter] = useState();
 
 
     //! variable for handling user specific notes in UserEnteries.js
@@ -47,8 +55,14 @@ const ItemState = (props) => {
     const host = 'http://localhost:4501';
 
 
+    // !for the loading bar progress
+    const [progress, setprogress] = useState();
+
+
     // Adding iteminfo to our database
-    const additem = async (Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink,showalert) => {
+    const additem = async (Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink, showalert) => {
+
+        setprogress(30)
         const response = await fetch(`${host}/api/item/additem`, {
             method: 'POST',
             headers: {
@@ -57,6 +71,7 @@ const ItemState = (props) => {
             },
             body: JSON.stringify({ Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink })
         });
+        setprogress(80)
         const json = await response.json();
 
 
@@ -65,12 +80,16 @@ const ItemState = (props) => {
 
         setitem(item.concat(json.item))
 
+        setprogress(100)
+
         return json;
     }
 
     // fetching/getting items from our database of logged in user only
     const getitems = async () => {
         // making the api call to fetch item from our database
+
+        setprogress(30)
         const response = await fetch(`${host}/api/item/fetchalluseritems`, {
             method: 'GET',
             headers: {
@@ -78,31 +97,37 @@ const ItemState = (props) => {
                 'auth-token': localStorage.getItem('token')
             },
         });
+        setprogress(80)
         const json = await response.json();
         // if (json == []) {
         //     console.log('no enteries')
         // }
+        setprogress(100)
         setitem(json)
     }
 
     // fetchallitems available in the database
     const getallitems = async () => {
         // making the api call to fetch item from our database
+        setprogress(30)
         const response = await fetch(`${host}/api/item/`, {
             method: 'GET'
         });
+        setprogress(80)
         const json = await response.json();
-
+        setprogress(100)
         setallitem(json);
     }
 
     const deleteitem = async (id, showalert) => {
+        setprogress(30)
         const response = await fetch(`${host}/api/item/deleteitem/${id}`, {
             method: 'DELETE',
             headers: {
                 'auth-token': localStorage.getItem('token')
             }
         });
+        setprogress(80)
         const json = await response.json();
 
         let item_Item_Name = json.item.Item_Name;
@@ -119,12 +144,14 @@ const ItemState = (props) => {
         // resetting the items variables to be displayed on the home screen
         setitem(newitems)
         setallitem(allnewitems)
+        setprogress(100)
     }
 
     //context api for updating the item 
     const updateitem = async (id, Item_Name, Description, Place, Tag, Time, Contact_No, Status, Category, GoogleDriveLink, showalert) => {
 
         // API call for fetching data
+        setprogress(30)
         const response = await fetch(`${host}/api/item/updateitem/${id}`, {
             method: 'PUT',
             headers: {
@@ -133,6 +160,8 @@ const ItemState = (props) => {
             },
             body: JSON.stringify({ Item_Name, Description, Place, Tag, Time, Contact_No, Status, Category, GoogleDriveLink })
         });
+
+        setprogress(80)
         const json = await response.json();
 
         // it will create a deep copy
@@ -161,6 +190,8 @@ const ItemState = (props) => {
 
         setitem(newItem)
 
+        setprogress(100)
+
         if (json.success) {
             showalert(`${Item_Name} successfully updated`, 'success')
         }
@@ -168,7 +199,7 @@ const ItemState = (props) => {
 
 
     return (
-        <ItemContext.Provider value={{ additem, tag, setTag, getitems, item, allitem, getallitems, deleteitem, updateitem, resettag, setResettag, giveid }}>
+        <ItemContext.Provider value={{ additem, tag, setTag, getitems, item, allitem, getallitems, deleteitem, updateitem, resettag, setResettag, giveid, categoryfilter, setcategoryfilter, durationfilter, setdurationfilter, tagfilter, settagfilter, progress, setprogress }}>
             {props.children}
         </ItemContext.Provider>
     )
