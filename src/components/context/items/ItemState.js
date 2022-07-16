@@ -160,6 +160,10 @@ const ItemState = (props) => {
         }
 
         setitem(newItem)
+
+        if (json.success) {
+            showalert(`${Item_Name} successfully updated`, 'success')
+        }
     }
 
 

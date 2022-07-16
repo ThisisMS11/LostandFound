@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import Card from './Card'
+import style from '../styles/filterBox.css'
 import itemContext from '../context/items/itemcontext'
 
 const CardsBox = () => {
@@ -24,7 +25,7 @@ const CardsBox = () => {
 
 
   return (
-    <div className=' container d-flex my-4 justify-content-start flex-wrap overflow-auto' style={boxstyle}>
+    <div className=' container d-flex my-4 justify-content-start flex-wrap overflow-auto scroller-design' style={boxstyle}>
 
       {/* Iterating the cards information here */}
       {

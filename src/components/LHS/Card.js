@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 const Card = (props) => {
     let style1 = {
@@ -6,6 +6,19 @@ const Card = (props) => {
     }
 
     let { Item_Name, Description, Place, Time, Record_date, Contact_No, Status, Category, imageid } = props;
+
+    const [badgecolor, setBadgecolor] = useState();
+
+    useEffect(() => {
+        if (Category == 'Lost') {
+            setBadgecolor('danger')
+        }
+        else {
+            setBadgecolor('success')
+        }
+    }, [])
+
+
     return (
         <>
             <div className="card my-2" style={style1}>
@@ -15,7 +28,9 @@ const Card = (props) => {
                 <div className="card-body">
 
                     <h5 className="card-title">{Item_Name}</h5>
-                    <span className="badge text-bg-danger position-absolute top-0 end-0">{Category}</span>
+
+                    {/* lost or found badge over the card */}
+                    <span className={`badge text-bg-${badgecolor} position-absolute top-0 end-0`}>{Category}</span>
                     <p className="card-text">{Description}</p>
                 </div>
                 <ul className="list-group list-group-flush">
