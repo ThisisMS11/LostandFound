@@ -19,7 +19,7 @@ const CardsBox = () => {
   useEffect(() => {
     getallitems();
   }, [])
-  
+
   // console.log('here are all the items',allitem);
 
   // the data has to be filtered here
@@ -33,7 +33,7 @@ const CardsBox = () => {
       {
         // allitem contains all the items present in our database added by all different users
         allitem.map((e) => {
-          return <div className='mx-3'><Card imageid={giveid(e.GoogleDriveLink)} Item_Name={e.Item_Name} User={e.User} Description={e.Description} Place={e.Place} Category={e.Category} Contact_No={e.Contact_No} Status={e.Status} Record_date={e.Record_date} Time={e.Time} /> </div>
+          return <div className='mx-3'><Card imageid={giveid(e.GoogleDriveLink)} Item_Name={e.Item_Name} User={e.User} Description={e.Description} Place={e.Place} Category={e.Category} Contact_No={e.Contact_No} Status={e.Status} Record_date={e.Record_date} Time={e.Time} key={e._id} /> </div>
 
         })
       }

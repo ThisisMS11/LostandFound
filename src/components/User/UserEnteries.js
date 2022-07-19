@@ -29,19 +29,20 @@ const UserEnteries = (props) => {
     const refClose = useRef(null);
 
     // Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink
-    const [resetitem, setresetitem] = useState({ id: "", Item_Name: "", Description: "", Tag: "", Time: "", Place: "", Contact_No: "", Status: "", Category: "", GoogleDriveLink: "" });
+    const [resetitem, setresetitem] = useState({ id: "", Item_Name: "", Description: "", Time: "", Place: "", Contact_No: "", Status: "", Category: "", GoogleDriveLink: "", Tag: "" });
 
 
 
     // to open the modal 
 
     const openmodal = (item) => {
-        console.log('the id of the item clicked is ', item.id);
+        console.log('the id of the item clicked is ', item._id);
 
         // !here we are placing the default(current) information in the modal input boxes...
 
         ref.current.click();
-        setresetitem({ id: item._id, Item_Name: item.Item_Name, Description: item.Description, Tag: item.Tag, Time: item.Time, Place: item.Place, Contact_No: item.Contact_No, Status: item.Status, Category: item.Category, GoogleDriveLink: item.GoogleDriveLink })
+        console.log('the tag is here', item.Tag)
+        setresetitem({ id: item._id, Item_Name: item.Item_Name, Description: item.Description, Time: item.Time, Tag: item.Tag, Place: item.Place, Contact_No: item.Contact_No, Status: item.Status, Category: item.Category, GoogleDriveLink: item.GoogleDriveLink })
     }
 
 
@@ -85,30 +86,30 @@ const UserEnteries = (props) => {
                             <div>
                                 <form >
                                     <div className="mb-3">
-                                        <label for="Item_Name" className="form-label">Item Name</label>
+                                        <label htmlFor="Item_Name" className="form-label">Item Name</label>
                                         <input type="text" className="form-control" id="Item_Name" aria-describedby="emailHelp" name='Item_Name' onChange={onChange} value={resetitem.Item_Name} />
                                     </div>
 
                                     <div className="mb-3">
-                                        <label for="Description" className="form-label">Description</label>
+                                        <label htmlFor="Description" className="form-label">Description</label>
                                         <input type="text" className="form-control" id="Description" name='Description' onChange={onChange} value={resetitem.Description} />
                                     </div>
                                     <div className="mb-3">
-                                        <label for="Place" className="form-label">Place</label>
+                                        <label htmlFor="Place" className="form-label">Place</label>
                                         <input type="text" className="form-control" id="Place" name='Place' onChange={onChange} value={resetitem.Place} />
                                     </div>
                                     <div className="mb-3">
-                                        <label for="GoogleDriveLink" className="form-label">GoogleDrive Link</label>
+                                        <label htmlFor="GoogleDriveLink" className="form-label">GoogleDrive Link</label>
                                         <input type="text" className="form-control" id="GoogleDriveLink" aria-describedby="emailHelp" placeholder='Paste GoogleDrive Photo Link here' name='GoogleDriveLink' onChange={onChange} value={resetitem.GoogleDriveLink} />
                                     </div>
 
                                     <div className="mb-3">
-                                        <label for="Time" className='mx-4'>Time</label>
+                                        <label htmlFor="Time" className='mx-4'>Time</label>
                                         <input type="datetime-local" id="Time" name="Time" onChange={onChange} value={resetitem.Time} />
                                     </div>
 
                                     <div className="mb-3">
-                                        <label for="Contact_no" className='mx-2'>Contact no.</label>
+                                        <label htmlFor="Contact_no" className='mx-2'>Contact no.</label>
                                         <input type="number" id="Contact_no" name="Contact_No" onChange={onChange} value={resetitem.Contact_No} />
                                     </div>
 
@@ -116,7 +117,7 @@ const UserEnteries = (props) => {
                                         <Filter dropdownoptions={dropdownoptions[0]} filtername='modalupdatefilter' initialvalue={resetitem.Tag} />
 
                                         <div className="mb-3 form-check my-2">
-                                            <label className="form-check-label" for="exampleCheck1">Status</label>
+                                            <label className="form-check-label" htmlFor="exampleCheck1">Status</label>
                                             <input type="checkbox" className="form-check-input" id="exampleCheck1" name="Status" onChange={onChange} value={resetitem.Status} />
                                         </div>
 

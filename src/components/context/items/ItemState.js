@@ -1,4 +1,5 @@
 import React, { Component, useState } from 'react'
+import { getLCP } from 'web-vitals';
 import ItemContext from './itemcontext'
 const ItemState = (props) => {
 
@@ -21,9 +22,9 @@ const ItemState = (props) => {
 
     // !variables for obtaining real time filter values from filterbox Component.
 
-    const [categoryfilter, setcategoryfilter] = useState();
-    const [durationfilter, setdurationfilter] = useState();
-    const [tagfilter, settagfilter] = useState();
+    const [categoryfilter, setcategoryfilter] = useState('All');
+    const [durationfilter, setdurationfilter] = useState('All Time');
+    const [tagfilter, settagfilter] = useState('All');
 
 
     //! variable for handling user specific notes in UserEnteries.js
@@ -48,6 +49,73 @@ const ItemState = (props) => {
             }
         }
         return id;
+    }
+
+
+    //! for filtering the data based on last x days
+    const givedatediff = (date_string, lastxdays) => {
+        const x = Number(lastxdays.slice(5, 7));
+        const d1 = Number(date_string.slice(0, 2));
+        const m1 = Number(date_string.slice(3, 4));
+        const y1 = Number(date_string.slice(5, 9));
+
+        // console.log('record date', m1, d1, y1)
+
+        const currentTime = new Date();
+        const month = currentTime.getMonth() + 1;
+        const day = currentTime.getDate();
+        const year = currentTime.getFullYear();
+
+        // console.log(`today's date `, month, day, year)
+        // mm/dd/yy
+        const Date1 = new Date(`${m1}/${d1}/${y1}`);
+        const Date2 = new Date(`${month}/${day}/${year}`);
+        const diffTime = Math.abs(Date1 - Date2);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+        // console.log('the difference is ', diffDays);
+        // suppose the difference has to be lesser than the last x days
+        // diffDays<=x
+        if (diffDays <= x) {
+            return true;
+        }
+    }
+
+    // fetchallitems available in the database
+    const getallitems = async () => {
+        // making the api call to fetch item from our database
+        setprogress(30)
+        const response = await fetch(`${host}/api/item/`, {
+            method: 'GET'
+        });
+        setprogress(80)
+        const json = await response.json();
+        setprogress(100)
+        setallitem(json);
+        // console.log('our all time from atlas looks like this', allitem)
+        return json;
+    }
+
+    const handlefilter = (list) => {
+        console.log('our input list is : ', list);
+        console.log('category filter : ', categoryfilter, 'durationfilter : ', durationfilter, 'tagfilter : ', tagfilter);
+
+        let filteredData = [];
+        let count = 0;
+
+        list.map((e) => {
+            if (e.Category == categoryfilter || categoryfilter == 'All') {
+                if (e.Tag == tagfilter || tagfilter == 'All') {
+                    if (givedatediff(e.Record_date, durationfilter) || durationfilter == 'All Time') {
+                        filteredData[count] = e;
+                        count++;
+                    }
+
+                }
+            }
+        })
+
+        setallitem(filteredData)
+        console.log('filtered items are :--> ', filteredData)
     }
 
 
@@ -104,20 +172,10 @@ const ItemState = (props) => {
         // }
         setprogress(100)
         setitem(json)
+
     }
 
-    // fetchallitems available in the database
-    const getallitems = async () => {
-        // making the api call to fetch item from our database
-        setprogress(30)
-        const response = await fetch(`${host}/api/item/`, {
-            method: 'GET'
-        });
-        setprogress(80)
-        const json = await response.json();
-        setprogress(100)
-        setallitem(json);
-    }
+
 
     const deleteitem = async (id, showalert) => {
         setprogress(30)
@@ -199,7 +257,7 @@ const ItemState = (props) => {
 
 
     return (
-        <ItemContext.Provider value={{ additem, tag, setTag, getitems, item, allitem, getallitems, deleteitem, updateitem, resettag, setResettag, giveid, categoryfilter, setcategoryfilter, durationfilter, setdurationfilter, tagfilter, settagfilter, progress, setprogress }}>
+        <ItemContext.Provider value={{ additem, tag, setTag, getitems, item, allitem, getallitems, deleteitem, updateitem, resettag, setResettag, giveid, categoryfilter, setcategoryfilter, durationfilter, setdurationfilter, tagfilter, settagfilter, progress, setprogress, setallitem, handlefilter }}>
             {props.children}
         </ItemContext.Provider>
     )

@@ -13,10 +13,14 @@ const Card = (props) => {
         if (Category == 'Lost') {
             setBadgecolor('danger')
         }
-        else {
+        else if(Category == 'Found') {
             setBadgecolor('success')
         }
     }, [])
+
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      }
 
 
     return (
@@ -27,11 +31,11 @@ const Card = (props) => {
 
                 <div className="card-body">
 
-                    <h5 className="card-title">{Item_Name}</h5>
+                    <h5 className="card-title">{capitalizeFirstLetter(Item_Name)}</h5>
 
                     {/* lost or found badge over the card */}
                     <span className={`badge text-bg-${badgecolor} position-absolute top-0 end-0`}>{Category}</span>
-                    <p className="card-text">{Description}</p>
+                    <p className="card-text">{capitalizeFirstLetter(Description)}</p>
                 </div>
                 <ul className="list-group list-group-flush">
                     <li className="list-group-item d-flex justify-content-between align-items-center ">

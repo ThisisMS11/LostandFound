@@ -43,7 +43,7 @@ const Navbar = (props) => {
                     </Link>
 
                     <div className=" fs-3 d-flex align-items-center justify-content-center col-4 text-center">
-                        LostandFound
+                        Lost&Found
                     </div>
 
 
