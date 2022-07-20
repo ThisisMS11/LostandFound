@@ -17,11 +17,9 @@ import ItemState from './components/context/items/ItemState';
 import UserEnteries from './components/User/UserEnteries';
 import Footer from './components/Footer';
 import itemContext from './components/context/items/itemcontext';
+import Filterbox from './components/styles/filterBox.css';
 
 function App() {
-  let Maindisplaystyle = {
-    display: 'flex'
-  }
 
 
 
@@ -57,11 +55,11 @@ function App() {
 
 
           <Alert alerto={alert} showalert={showalert} />
-          
+
 
           <Routes>
-            <Route exact path="/" element={<div id='Maindisplay' style={Maindisplaystyle}>
-              <ItemMainBox/>
+            <Route exact path="/" element={<div id='Maindisplay' className='container' >
+              <ItemMainBox />
               <Buttoncontainer showalert={showalert} />
             </div>}>
             </Route>
@@ -70,7 +68,7 @@ function App() {
             <Route exact path="/signup" element={<Signup showalert={showalert} />}></Route>
 
             {/* for the user related entries and information */}
-            <Route exact path="/account" element={<UserEnteries showalert={showalert}/>}></Route>
+            <Route exact path="/account" element={<UserEnteries showalert={showalert} />}></Route>
 
           </Routes>
 

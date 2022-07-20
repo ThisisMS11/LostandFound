@@ -27,6 +27,8 @@ const Itemform = (props) => {
         setItem({ ...item, [e.target.name]: e.target.value })
     }
 
+
+    // to clear the inputs after filling the itemform
     const clear = () => {
         forminputs.forEach(e => {
             const input = document.getElementById(e)
@@ -107,7 +109,7 @@ const Itemform = (props) => {
 
                         <div className="mb-3 form-check my-2">
                             <label className="form-check-label" htmlFor="exampleCheck1">Status</label>
-                            <input type="checkbox" className="form-check-input" id="exampleCheck1" name="Status" onChange={onChange} />
+                            <input type="checkbox" className="form-check-input" id="exampleCheck1" name="Status" onChange={onChange} value="delivered"/>
                         </div>
 
 

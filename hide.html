@@ -16,20 +16,32 @@
     ></script>
   </head>
   <body>
+    <input
+      type="checkbox"
+      id="vehicle1"
+      name="vehicle1"
+      onclick="handlechange()"
+      value="delivered"
+    />
 
-    <input type="checkbox" id="vehicle1" name="vehicle1" onchange=handlechange() >
-    <img src="https://drive.google.com/uc?export=view&id=144Rsd4FUiPGn1WyNC6ku-rB5bM6dssWt" className="card-img-top" alt="drive image"/>
+    <div id="display">off</div>
 
     <script>
-        const checkbox=document.getElementById("vehicle1")
-        console.log(checkbox.value)
-        const handlechange=()=>{
-            console.log('before click ',checkbox.value)
+      const checkbox = document.getElementById("vehicle1");
+      how are you 
+
+      const display = document.getElementById("display");
+
+      const handlechange = () => {
+        console.log("the checkbox.value => \n", checkbox.value);
+        if (checkbox.value == "delivered") {
+          display.innerText = "delivered";
+          return;
         }
+        display.innerText = " not delivered";
+      };
     </script>
   </body>
 </html>
 
 <!-- https://drive.google.com/file/d/144Rsd4FUiPGn1WyNC6ku-rB5bM6dssWt/view?usp=sharing -->
-
-

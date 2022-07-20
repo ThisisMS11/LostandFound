@@ -8,8 +8,8 @@ const Buttoncontainer = (props) => {
     let style1 = {
         border: "solid 1px #d5cfcf",
         borderRadius: '10px',
-        width: '500px',
-        height: '595px',
+        width: 'fit-content',
+        // height: '595px',
     }
 
     // !the below usestate are for shifting the screen between buttons and form
@@ -53,7 +53,7 @@ const Buttoncontainer = (props) => {
     const closeform = useRef(null);
 
     return (
-        <div style={style1} className='d-flex justify-content-center align-items-center'>
+        <div style={style1} className='d-flex flex-column justify-content-center align-items-center container col-4'>
             <i className="fa-solid fa-xmark fa-2x" id='crossicon' ref={closeform} style={formdisplay} onClick={backtobuttons}></i>
 
 

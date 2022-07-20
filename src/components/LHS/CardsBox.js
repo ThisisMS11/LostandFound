@@ -27,13 +27,13 @@ const CardsBox = () => {
 
 
   return (
-    <div className=' container d-flex my-4 justify-content-start flex-wrap overflow-auto scroller-design' style={boxstyle}>
+    <div className=' container d-flex my-4 justify-content-center flex-wrap overflow-auto scroller-design' style={boxstyle}>
 
       {/* Iterating the cards information here */}
       {
         // allitem contains all the items present in our database added by all different users
         allitem.map((e) => {
-          return <div className='mx-3'><Card imageid={giveid(e.GoogleDriveLink)} Item_Name={e.Item_Name} User={e.User} Description={e.Description} Place={e.Place} Category={e.Category} Contact_No={e.Contact_No} Status={e.Status} Record_date={e.Record_date} Time={e.Time} key={e._id} /> </div>
+          return <div className='mx-3' key={e._id} ><Card imageid={giveid(e.GoogleDriveLink)} Item_Name={e.Item_Name} User={e.User} Description={e.Description} Place={e.Place} Category={e.Category} Contact_No={e.Contact_No} Status={e.Status} Record_date={e.Record_date} Time={e.Time} /> </div>
 
         })
       }

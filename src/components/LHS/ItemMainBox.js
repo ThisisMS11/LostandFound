@@ -11,7 +11,7 @@ const ItemMainBox = (props) => {
 
   
   return (
-    <div style={style1}>
+    <div >
       <Filterbox/>
 
       <CardsBox/>

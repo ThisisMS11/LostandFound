@@ -36,19 +36,44 @@ const Navbar = (props) => {
                 height={3}
                 progress={progress}
             />
-            <nav className="navbar navbar-expand-lg bg-light d-flex">
+            {/* <nav className="navbar navbar-expand-lg bg-light d-flex">
                 <div className="d-flex col-12 justify-content-around">
                     <Link className="navbar-brand col-4" to="/">
                         <img src={images} alt="image not found" style={imagestyle} />
                     </Link>
 
-                    <div className=" fs-3 d-flex align-items-center justify-content-center col-4 text-center">
+                    {/* <div className=" fs-3 d-flex align-items-center justify-content-center col-4 text-center">
                         Lost&Found
+                    </div> */}
+
+
+
+            {/* <div className="collapse navbar-collapse my-lg-0 justify-content-end" id="navbarSupportedContent">
+                        {!localStorage.getItem('token') ? <div className="d-flex">
+                            <Link className="btn btn-primary mx-2" to='/login'>Login</Link>
+                            <Link className="btn btn-primary mx-2" to='/signup' ref={props.refClose}>Sign up</Link>
+                        </div> : <div>
+                            <Link className="btn btn-primary mx-2" to='/account'>My Enteries</Link>
+                            <button className="btn btn-primary mx-2" onClick={handlelogout}>LogOut</button>
+                        </div>}
                     </div>
+                </div> */}
+            {/* </nav> */}
 
+            <nav class="navbar navbar-expand-lg bg-light ">
+                <div class="container-fluid">
 
+                        <Link className="navbar-brand" to="/">
+                            <img src={images} alt="image not found" style={imagestyle} />
+                        </Link>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
 
-                    <div className="collapse navbar-collapse col-2  justify-content-end" id="loginsignup">
+    
+
+                    <div class="collapse navbar-collapse  justify-content-end" id="navbarSupportedContent">
+
                         {!localStorage.getItem('token') ? <div className="d-flex">
                             <Link className="btn btn-primary mx-2" to='/login'>Login</Link>
                             <Link className="btn btn-primary mx-2" to='/signup' ref={props.refClose}>Sign up</Link>
@@ -59,7 +84,7 @@ const Navbar = (props) => {
                     </div>
                 </div>
             </nav>
-            <Showalert />
+            {/* <Showalert /> */}
         </>
     )
 }

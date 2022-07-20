@@ -34,7 +34,7 @@ const Filterbox = () => {
       <Filter dropdownoptions={dropdownoptions[0]} filtername='categoryfilter' initialvalue={dropdownoptions[0][0]} />
       <Filter dropdownoptions={dropdownoptions[1]} filtername='durationfilter' initialvalue={dropdownoptions[1][0]} />
       <Filter dropdownoptions={dropdownoptions[2]} filtername='tagfilter' initialvalue={dropdownoptions[2][0]} />
-      <button type="button" class="btn btn-dark" onClick={applyfilter}>Apply filter</button>
+      <button type="button" className="btn btn-dark" onClick={applyfilter}>Apply filter</button>
     </div >
   )
 }

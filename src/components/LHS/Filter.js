@@ -55,7 +55,7 @@ const Filter = (props) => {
                     {/* iterating the drop down options here  */}
                     {dropdownoptions.map(
                         (e) => {
-                            return <li><a className="dropdown-item" to='/' onClick={() => filterheadingchanger(e)}>{e}</a></li>;
+                            return <li key={e}><a className="dropdown-item" to='/' onClick={() => filterheadingchanger(e)}>{e}</a></li>;
                         }
                     )}
                 </ul>

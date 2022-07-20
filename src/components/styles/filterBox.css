@@ -8,6 +8,17 @@
     position: absolute;
 }
 
+/* css for the main home screen display of our app */
+#Maindisplay {
+    display: flex;
+}
+
+@media only screen and (max-width: 600px) {
+    #Maindisplay {
+        flex-direction: column;
+    }
+}
+
 /* for the traingle icon */
 #dropdownicon {
     cursor: pointer;
@@ -65,9 +76,9 @@
 /* css for the cross icon in buttoncontainer.js*/
 #crossicon {
     /* border: solid 2px black; */
-    position: absolute;
+    /* position: absolute;
     top: 112px;
-    right: 465px;
+    right: 465px; */
     transition: all 0.3s ease-in-out 0.1s;
 }
 
@@ -95,7 +106,7 @@
 
 /* Handle */
 .scroller-design::-webkit-scrollbar-thumb {
-    background:rgb(198 191 191);
+    background: rgb(198 191 191);
     border-radius: 5px;
 }
 
