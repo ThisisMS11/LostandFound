@@ -1,7 +1,10 @@
-import React, { useState,useRef } from 'react'
+import React, { useState, useRef, useContext } from 'react'
 import Itemform from './Itemform';
 import Filterbox from '../styles/filterBox.css';
 import { useNavigate } from 'react-router-dom';
+import itemContext from '../context/items/itemcontext';
+
+// firebase imports starts here...
 
 
 const Buttoncontainer = (props) => {
@@ -18,6 +21,8 @@ const Buttoncontainer = (props) => {
 
     const navigate = useNavigate();
 
+    const context = useContext(itemContext)
+
 
     const shiftscreen = (s) => {
         if (localStorage.getItem('token')) {
@@ -29,7 +34,8 @@ const Buttoncontainer = (props) => {
         }
         else {
             props.showalert("you need to login for adding an item", "warning")
-            navigate('/login')
+            // here i need to make the login in pop using usereference
+            context.signupRef.current.click();
         }
     }
 
@@ -59,7 +65,7 @@ const Buttoncontainer = (props) => {
 
             {/* item form container */}
             <div style={formdisplay}>
-                <Itemform headingmaterial={head} showalert={props.showalert} closeform={closeform}/>
+                <Itemform headingmaterial={head} showalert={props.showalert} closeform={closeform} />
             </div>
 
             {/* buttons container */}

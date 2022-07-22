@@ -7,6 +7,12 @@ import itemContext from './context/items/itemcontext'
 import { useContext } from 'react'
 import LoadingBar from 'react-top-loading-bar'
 
+// firebase imports starts here...
+import { app, database } from '../../src/firebaseConfig'
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+
+//! we are using user's google accounts for sign in purposes so we don't need to create website specific accounts anymore.
+
 const Navbar = (props) => {
 
     let imagestyle = {
@@ -14,20 +20,52 @@ const Navbar = (props) => {
         height: '80px'
     }
 
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth();
+    
 
     const handlelogout = () => {
         localStorage.removeItem('token');
-        navigate('/login')
-        props.showalert("Logout successful", 'danger')
-
+        // navigate('/login')
+        signOut(auth).then(() => {
+            props.showalert("Logout successful", 'danger')
+        }).catch((error) => {
+            console.log('signout error => ', error);
+            alert(error.message)
+        });
     }
+
+
+
+    const handlesignup = async (e) => {
+        e.preventDefault();
+        setprogress(30)
+        signInWithPopup(auth, provider)
+            .then((data) => {
+                console.log('googlesign in data  => ', data)
+                // console.log('our access token is ', data.user.accessToken)
+
+                localStorage.setItem('token', data.user.accessToken);
+                localStorage.setItem('userid', data._tokenResponse.localId);
+
+                alert('sign up successful')
+                props.showalert(`${data._tokenResponse.displayName} , Welcome to Lost&Found@IIITDMJ `, 'success')
+            })
+            .catch((error) => {
+                console.log(error);
+                alert(error.message)
+            })
+        setprogress(80)
+        setprogress(100)
+    }
+
 
     const navigate = useNavigate();
 
 
 
     const context = useContext(itemContext);
-    const { progress, setprogress } = context;
+    const { progress, setprogress, signupRef } = context;
 
     return (
         <>
@@ -36,47 +74,23 @@ const Navbar = (props) => {
                 height={3}
                 progress={progress}
             />
-            {/* <nav className="navbar navbar-expand-lg bg-light d-flex">
-                <div className="d-flex col-12 justify-content-around">
-                    <Link className="navbar-brand col-4" to="/">
+
+            <nav className="navbar navbar-expand-lg bg-light ">
+                <div className="container-fluid">
+
+                    <Link className="navbar-brand" to="/">
                         <img src={images} alt="image not found" style={imagestyle} />
                     </Link>
-
-                    {/* <div className=" fs-3 d-flex align-items-center justify-content-center col-4 text-center">
-                        Lost&Found
-                    </div> */}
-
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
 
 
-            {/* <div className="collapse navbar-collapse my-lg-0 justify-content-end" id="navbarSupportedContent">
-                        {!localStorage.getItem('token') ? <div className="d-flex">
-                            <Link className="btn btn-primary mx-2" to='/login'>Login</Link>
-                            <Link className="btn btn-primary mx-2" to='/signup' ref={props.refClose}>Sign up</Link>
-                        </div> : <div>
-                            <Link className="btn btn-primary mx-2" to='/account'>My Enteries</Link>
-                            <button className="btn btn-primary mx-2" onClick={handlelogout}>LogOut</button>
-                        </div>}
-                    </div>
-                </div> */}
-            {/* </nav> */}
 
-            <nav class="navbar navbar-expand-lg bg-light ">
-                <div class="container-fluid">
-
-                        <Link className="navbar-brand" to="/">
-                            <img src={images} alt="image not found" style={imagestyle} />
-                        </Link>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-
-    
-
-                    <div class="collapse navbar-collapse  justify-content-end" id="navbarSupportedContent">
+                    <div className="collapse navbar-collapse  justify-content-end" id="navbarSupportedContent">
 
                         {!localStorage.getItem('token') ? <div className="d-flex">
-                            <Link className="btn btn-primary mx-2" to='/login'>Login</Link>
-                            <Link className="btn btn-primary mx-2" to='/signup' ref={props.refClose}>Sign up</Link>
+                            <button className="btn btn-primary mx-2" onClick={handlesignup} ref={signupRef}>Sign Up with google</button>
                         </div> : <div>
                             <Link className="btn btn-primary mx-2" to='/account'>My Enteries</Link>
                             <button className="btn btn-primary mx-2" onClick={handlelogout}>LogOut</button>

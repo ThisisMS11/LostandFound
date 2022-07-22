@@ -1,6 +1,12 @@
-import React, { useState, useContext,useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import itemContext from '../context/items/itemcontext';
+
+
+// firebase imports starts here...
+import { app, database } from '../../firebaseConfig'
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+
 
 const Signup = (props) => {
 
@@ -9,6 +15,12 @@ const Signup = (props) => {
     const { name, email, password, cpassword } = credentials;
 
     const navigate = useNavigate();
+
+
+    // ! firebase google authentication
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth();
+
 
 
     const context = useContext(itemContext);
@@ -26,29 +38,20 @@ const Signup = (props) => {
         e.preventDefault();
         if (password === cpassword) {
             setprogress(30)
-            const response = await fetch("http://localhost:4501/api/auth/createuser", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name, email, password })
-            });
-
-            // json contains success msg and auth-token
+            signInWithPopup(auth, provider)
+                .then((data) => {
+                    console.log('googlesign in data  => ', data)
+                    alert('sign up successful')
+                    props.showalert("Signing in Successful", 'success')
+                })
+                .catch((error) => {
+                    console.log(error);
+                    alert(error.message)
+                })
             setprogress(80)
-            const json = await response.json();
 
-            // saving the authtoken
-            if (json.success) {
-                console.log("Signup successful");
-                localStorage.setItem('token', json.authtoken);
-                navigate('/')
-                props.showalert("Sign up successful", 'success')
-            }
-            else {
-                props.showalert(json.errors[0].msg, 'danger')
-            }
         }
+
         else {
             props.showalert("confirm password did not match", 'danger')
         }

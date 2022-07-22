@@ -3,6 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar';
 import itemContext from '../context/items/itemcontext';
 
+// firebase imports starts here...
+import { app, database } from '../../firebaseConfig'
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+
+
 const Login = (props) => {
     const [credentials, setCredentials] = useState({ email: "", password: "" })
 

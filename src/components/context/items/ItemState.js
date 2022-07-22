@@ -1,9 +1,24 @@
-import React, { Component, useState } from 'react'
-import { getLCP } from 'web-vitals';
+import React, { useState, useRef } from 'react'
 import ItemContext from './itemcontext'
+
+//! firebase imports are here
+import { app, database } from '../../../firebaseConfig'
+import { collection, addDoc, getDocs, onSnapshot, where, query, doc, deleteDoc, updateDoc } from "firebase/firestore"
+
+
+
 const ItemState = (props) => {
 
     // creating state for tag input
+
+    // ? for the record time of our new item
+    const currentTime = new Date();
+    const localtime = currentTime.toLocaleString();
+
+
+    // ! Firebase things
+    const collectionRef = collection(database, 'items');
+
 
 
     // here i can create all the states and functions.
@@ -13,10 +28,13 @@ const ItemState = (props) => {
     const [tag, setTag] = useState();
 
     // variable for resetting the category in update modal
-    const [resettag, setResettag] = useState();
+    const [resettag, setResettag] = useState('All');
 
 
     const iteminitial = [];
+
+    // creating useref hook for opening googlepop on click lost/found buttons without signin.
+    const signupRef = useRef(null);
 
 
 
@@ -81,19 +99,31 @@ const ItemState = (props) => {
     }
 
     // fetchallitems available in the database
+
     const getallitems = async () => {
-        // making the api call to fetch item from our database
-        setprogress(30)
-        const response = await fetch(`${host}/api/item/`, {
-            method: 'GET'
+        const querySnapshot = await getDocs(collectionRef);
+        
+
+        let jsonhold = [];
+        let count = 0;
+
+        querySnapshot.forEach((doc) => {
+            // return { ...item.data(), id: item.id };
+            jsonhold[count] = { ...doc.data(), id: doc.id };
+            count++;
         });
-        setprogress(80)
-        const json = await response.json();
-        setprogress(100)
-        setallitem(json);
-        // console.log('our all time from atlas looks like this', allitem)
-        return json;
+
+        setallitem(jsonhold)
+
+        return jsonhold;
+
+
+        // console.log('jsonhold => ', jsonhold);  typeof jsonhold is of a  javascript object.
+
+        // console.log('allitems after adding data are ', allitem);
     }
+
+
 
     const handlefilter = (list) => {
         console.log('our input list is : ', list);
@@ -131,47 +161,62 @@ const ItemState = (props) => {
     const additem = async (Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink, showalert) => {
 
         setprogress(30)
-        const response = await fetch(`${host}/api/item/additem`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'auth-token': localStorage.getItem('token')
-            },
-            body: JSON.stringify({ Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink })
-        });
-        setprogress(80)
-        const json = await response.json();
 
+        console.log('additem triggered here');
 
-        // ! adding the new item with the already present ones here
-        setallitem(allitem.concat(json.item))
+        let newitem = {
+            Item_Name: Item_Name,
+            Description: Description,
+            User: localStorage.getItem('userid'),
+            Tag: Tag,
+            Place: Place,
+            Time: Time,
+            Contact_No: Contact_No,
+            Status: Status,
+            Category: Category,
+            Record_date: localtime,
+            GoogleDriveLink: GoogleDriveLink
+        }
 
-        setitem(item.concat(json.item))
+        addDoc(collectionRef, newitem)
+            .then((response) => {
+                console.log('our new item added is ', response)
+                setprogress(80)
 
-        setprogress(100)
+                setTimeout(() => {
+                    setprogress(100)
+                }, 600);
 
-        return json;
+                setallitem(allitem.concat(newitem));
+                return true;
+            })
+            .catch((err) => {
+                alert(err.message)
+                return false;
+            })
     }
 
     // fetching/getting items from our database of logged in user only
     const getitems = async () => {
-        // making the api call to fetch item from our database
 
         setprogress(30)
-        const response = await fetch(`${host}/api/item/fetchalluseritems`, {
-            method: 'GET',
-            headers: {
-                // here we are getting the token that is stored in the localstorage for further usage
-                'auth-token': localStorage.getItem('token')
-            },
-        });
         setprogress(80)
-        const json = await response.json();
-        // if (json == []) {
-        //     console.log('no enteries')
-        // }
+
+        const useridquery = query(collectionRef, where("User", "==", localStorage.getItem('userid')));
+
+        const querySnapshot = await getDocs(useridquery);
+        let jsonhold = [];
+        let count = 0;
+
+        querySnapshot.forEach((doc) => {
+            // return { ...item.data(), id: item.id };
+            jsonhold[count] = { ...doc.data(), id: doc.id };
+            count++;
+        });
+
+        setitem(jsonhold)
+
         setprogress(100)
-        setitem(json)
 
     }
 
@@ -179,29 +224,34 @@ const ItemState = (props) => {
 
     const deleteitem = async (id, showalert) => {
         setprogress(30)
-        const response = await fetch(`${host}/api/item/deleteitem/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'auth-token': localStorage.getItem('token')
-            }
-        });
+
         setprogress(80)
-        const json = await response.json();
 
-        let item_Item_Name = json.item.Item_Name;
+        // const newitems = item.filter((item) => { return item._id !== id })
 
-        if (json.success) {
-            showalert(`${item_Item_Name} successfully deleted`, 'success')
-        }
-
-        const newitems = item.filter((item) => { return item._id !== id })
-
-        const allnewitems = allitem.filter((item) => { return item._id !== id })
+        // const allnewitems = allitem.filter((item) => { return item._id !== id })
 
 
         // resetting the items variables to be displayed on the home screen
-        setitem(newitems)
-        setallitem(allnewitems)
+
+        // we want to delete using document id
+
+        const doctoupdate = doc(database, "items", id);
+
+        const deleteditem = item.filter((item) => { return item.id == id })
+
+        deleteDoc(doctoupdate)
+            .then(() => {
+                showalert(`${deleteditem[0].Item_Name} successfully deleted`, 'success')
+                const newitems = item.filter((item) => { return item.id !== id })
+                const allnewitems = allitem.filter((item) => { return item.id !== id })
+                setitem(newitems)
+                setallitem(allnewitems)
+            })
+            .catch((err) => {
+                alert(err.message)
+            })
+
         setprogress(100)
     }
 
@@ -210,54 +260,52 @@ const ItemState = (props) => {
 
         // API call for fetching data
         setprogress(30)
-        const response = await fetch(`${host}/api/item/updateitem/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'auth-token': localStorage.getItem('token')
-            },
-            body: JSON.stringify({ Item_Name, Description, Place, Tag, Time, Contact_No, Status, Category, GoogleDriveLink })
-        });
+
 
         setprogress(80)
-        const json = await response.json();
 
-        // it will create a deep copy
-        let newItem = JSON.parse(JSON.stringify(item))
+        // setitem(newItem)
 
-        console.log('the newItem is ', newItem)
-        //! upto this point the entry in the database has been updated but the variables used for obtaining the notes are still the same so to update those as well we do the following:-
+        const toupdateitem = doc(database, "items", id);
+
+        // console.log('our tag is ', Tag);
 
 
-        //finding the note and updating it.
-        for (let index = 0; index < newItem.length; index++) {
-            let element = newItem[index];
-            if (element._id == id) {
-                element.Item_Name = Item_Name
-                element.Description = Description
-                element.Place = Place
-                element.Tag = Tag
-                element.Time = Time
-                element.Contact_No = Contact_No
-                element.Status = Status
-                element.Category = Category
-                element.GoogleDriveLink = GoogleDriveLink
-                break;
-            }
-        }
+        // ! there is nothing in response to updateDoc .
+        await updateDoc(toupdateitem, {
+            Item_Name: Item_Name,
+            Description: Description,
+            Place: Place,
+            Tag: Tag,
+            Time: Time,
+            Contact_No: Contact_No,
+            Status: Status,
+            Category: Category,
+            GoogleDriveLink: GoogleDriveLink
+        })
+            .catch((err) => {
+                alert(err.message)
+            })
 
-        setitem(newItem)
+        // const newitems = item.filter((item) => { return item.id == id })
+        // const allnewitems = allitem.filter((item) => { return item.id !== id })
+        // setitem(newitems)
+        // setallitem(allnewitems)
+
+        getallitems();
+        getitems();
+
+        showalert(`updation successful`, 'success')
 
         setprogress(100)
 
-        if (json.success) {
-            showalert(`${Item_Name} successfully updated`, 'success')
-        }
+
+
     }
 
 
     return (
-        <ItemContext.Provider value={{ additem, tag, setTag, getitems, item, allitem, getallitems, deleteitem, updateitem, resettag, setResettag, giveid, categoryfilter, setcategoryfilter, durationfilter, setdurationfilter, tagfilter, settagfilter, progress, setprogress, setallitem, handlefilter }}>
+        <ItemContext.Provider value={{ additem, tag, setTag, getitems, item, allitem, getallitems, deleteitem, updateitem, resettag, setResettag, giveid, categoryfilter, setcategoryfilter, durationfilter, setdurationfilter, tagfilter, settagfilter, progress, setprogress, setallitem, handlefilter, signupRef }}>
             {props.children}
         </ItemContext.Provider>
     )

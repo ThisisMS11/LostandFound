@@ -36,14 +36,14 @@ const UserEnteries = (props) => {
     // to open the modal 
 
     const openmodal = (item) => {
-        console.log('the id of the item clicked is ', item._id);
+        console.log('the id of the item clicked is ', item.id);
 
         // !here we are placing the default(current) information in the modal input boxes...
 
 
         console.log(item)
         // console.log('the tag is here', item.Tag)
-        setresetitem({ id: item._id, Item_Name: item.Item_Name, Description: item.Description, Time: item.Time, Tag: item.Tag, Place: item.Place, Contact_No: item.Contact_No, Status: item.Status, Category: item.Category, GoogleDriveLink: item.GoogleDriveLink })
+        setresetitem({ id: item.id, Item_Name: item.Item_Name, Description: item.Description, Time: item.Time, Tag: item.Tag, Place: item.Place, Contact_No: item.Contact_No, Status: item.Status, Category: item.Category, GoogleDriveLink: item.GoogleDriveLink })
         ref.current.click();
 
         console.log(resetitem)
@@ -58,7 +58,11 @@ const UserEnteries = (props) => {
 
         refClose.current.click();
 
-        console.log('category ', props.headingmaterial)
+        // console.log('category ', props.headingmaterial)
+
+        // id, Item_Name, Description, Place, Tag, Time, Contact_No, Status, Category, GoogleDriveLink, showalert
+
+        // console.log('our tag is ', resettag);
         updateitem(resetitem.id, resetitem.Item_Name, resetitem.Description, resetitem.Place, resettag, resetitem.Time, resetitem.Contact_No, resetitem.Status, resetitem.Category, resetitem.GoogleDriveLink, showalert)
     }
 
@@ -146,13 +150,13 @@ const UserEnteries = (props) => {
                 {
                     // !item contains all the user notes in json format
                     item.map((e) => {
-                        return <div className='mx-4' key={e._id}><Card imageid={giveid(e.GoogleDriveLink)} Item_Name={e.Item_Name} User={e.User} Description={e.Description} Place={e.Place} Category={e.Category} Contact_No={e.Contact_No} Status={e.Status} Record_date={e.Record_date} Time={e.Time} />
+                        return <div className='mx-4' key={e.id}><Card imageid={giveid(e.GoogleDriveLink)} Item_Name={e.Item_Name} User={e.User} Description={e.Description} Place={e.Place} Category={e.Category} Contact_No={e.Contact_No} Status={e.Status} Record_date={e.Record_date} Time={e.Time} />
                             <div className="d-flex justify-content-around border border-dark py-2 rounded opacity-75">
 
                                 {/* id,Item_Name, Description, Place, Time, Record_date, Contact_No, Status, Category ,showalert*/}
                                 <i className="fa-solid fa-pen-to-square dandu" data-toggle="tooltip" data-placement="top" title="update item" onClick={() => { openmodal(e) }} ></i>
 
-                                <i className="fa-solid fa-trash dandu" data-toggle="tooltip" data-placement="top" title="delete item" onClick={() => { deleteitem(e._id, showalert) }}></i>
+                                <i className="fa-solid fa-trash dandu" data-toggle="tooltip" data-placement="top" title="delete item" onClick={() => { deleteitem(e.id, showalert) }}></i>
                             </div>
                         </div>
 

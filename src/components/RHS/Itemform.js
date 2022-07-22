@@ -55,9 +55,10 @@ const Itemform = (props) => {
         // console.log("Item info :--->>>> ", item);
         let { Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink } = item;
 
-        const answer = await additem(Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink);
+        // const answer = await additem(Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink);
+        let response = additem(Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink);
 
-        if (answer.success) {
+        if (response) {
             showalert('Item added sucessfully', 'success')
 
             // closing the form here by using useRef variable.
@@ -109,7 +110,7 @@ const Itemform = (props) => {
 
                         <div className="mb-3 form-check my-2">
                             <label className="form-check-label" htmlFor="exampleCheck1">Status</label>
-                            <input type="checkbox" className="form-check-input" id="exampleCheck1" name="Status" onChange={onChange} value="delivered"/>
+                            <input type="checkbox" className="form-check-input" id="exampleCheck1" name="Status" onChange={onChange} value="delivered" />
                         </div>
 
 
