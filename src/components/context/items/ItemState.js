@@ -52,6 +52,10 @@ const ItemState = (props) => {
     const [allitem, setallitem] = useState([]);
 
     const giveid = (link) => {
+
+        if(link=''){
+            return ''
+        }
         let id = '';
         for (let i = 0; i < link.length; i++) {
             const element = link[i];
@@ -148,9 +152,6 @@ const ItemState = (props) => {
         console.log('filtered items are :--> ', filteredData)
     }
 
-
-
-    const host = 'http://localhost:4501';
 
 
     // !for the loading bar progress
