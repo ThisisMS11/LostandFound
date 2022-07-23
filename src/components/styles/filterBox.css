@@ -114,3 +114,11 @@
 .scroller-design::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+
+/* css for displaying alternate image when network fails */
+#alternateimage {
+    background: url('/public/noimagefound.jpg') no-repeat center center/cover;
+    width: 288px;
+    height: 260px;
+} 

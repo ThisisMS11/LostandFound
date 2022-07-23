@@ -248,7 +248,7 @@ const ItemState = (props) => {
 
         setTimeout(() => {
             setprogress(50)
-        }, 100);
+        }, 200);
 
         const doctoupdate = doc(database, "items", id);
 
@@ -256,7 +256,7 @@ const ItemState = (props) => {
 
         setTimeout(() => {
             setprogress(80)
-        }, 100);
+        }, 200);
 
         deleteDoc(doctoupdate)
             .then(() => {
@@ -271,7 +271,7 @@ const ItemState = (props) => {
             })
         setTimeout(() => {
             setprogress(100)
-        }, 100);
+        }, 500);
 
 
     }
@@ -322,8 +322,20 @@ const ItemState = (props) => {
     }
 
 
+    // response tester
+    const statushelp = async () => {
+        const response = await fetch("https://drive.google.com/uc?export=view&id=14way_dVImUuU-1eVMd85LWhSONYyjPDW", {
+            method: "GET"
+        });
+        // const json = await response.json();
+
+        console.log(response);
+        console.log('our main status is *******', response.status);
+    }
+
+
     return (
-        <ItemContext.Provider value={{ additem, tag, setTag, getitems, item, allitem, getallitems, deleteitem, updateitem, resettag, setResettag, giveid, categoryfilter, setcategoryfilter, durationfilter, setdurationfilter, tagfilter, settagfilter, progress, setprogress, setallitem, handlefilter, signupRef, displaydecider, setDisplaydecider }}>
+        <ItemContext.Provider value={{ additem, tag, setTag, getitems, item, allitem, getallitems, deleteitem, updateitem, resettag, setResettag, giveid, categoryfilter, setcategoryfilter, durationfilter, setdurationfilter, tagfilter, settagfilter, progress, setprogress, setallitem, handlefilter, signupRef, displaydecider, setDisplaydecider, statushelp }}>
             {props.children}
         </ItemContext.Provider>
     )

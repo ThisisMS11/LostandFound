@@ -4,13 +4,14 @@ import itemContext from '../context/items/itemcontext'
 import Filter from '../LHS/Filter'
 import { Navigate, useNavigate } from 'react-router'
 
+
 const UserEnteries = (props) => {
 
 
     let { showalert } = props;
 
     const context = useContext(itemContext);
-    let { getitems, item, deleteitem, updateitem, resettag, giveid } = context;
+    let { getitems, item, deleteitem, updateitem, resettag, giveid, statushelp } = context;
 
     // improvement can be there but for now 
     let dropdownoptions = [
@@ -50,6 +51,8 @@ const UserEnteries = (props) => {
             }
         })();
 
+
+        statushelp();
     }, [])
 
 
