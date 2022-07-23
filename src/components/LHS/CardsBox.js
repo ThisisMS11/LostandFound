@@ -17,12 +17,19 @@ const CardsBox = () => {
   // !fetching all the notes here
   // whenever getallitems would change anywhere in the react app this useeffect would trigger itself.
   useEffect(() => {
+    // mohit();
     getallitems();
   }, [])
 
   // console.log('here are all the items',allitem);
 
   // the data has to be filtered here
+
+  // const mohit = async () => {
+  //   const response = await fetch('https://drive.google.com/uc?export=view&id=14way_dVImUuU-1eVMd85LWhSONYyjPDW');
+  //   const json = await response.json();
+  //   console.log('our json is ', json.Status);
+  // }
 
 
 

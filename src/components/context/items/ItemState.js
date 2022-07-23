@@ -53,7 +53,7 @@ const ItemState = (props) => {
 
     const giveid = (link) => {
 
-        if(link=''){
+        if (link = '') {
             return ''
         }
         let id = '';
@@ -105,31 +105,37 @@ const ItemState = (props) => {
     // fetchallitems available in the database
 
     const getallitems = async () => {
+
+        setprogress(30);
         const querySnapshot = await getDocs(collectionRef);
-        
+        setprogress(70);
+
 
         let jsonhold = [];
         let count = 0;
 
         querySnapshot.forEach((doc) => {
             // return { ...item.data(), id: item.id };
+
+            // to include the id of the item as well in allitem state.
             jsonhold[count] = { ...doc.data(), id: doc.id };
             count++;
         });
 
+
+        //typeof jsonhold is of a  javascript object.
         setallitem(jsonhold)
 
+        console.log('jsonhold => ', jsonhold);
+        setprogress(100)
+
         return jsonhold;
-
-
-        // console.log('jsonhold => ', jsonhold);  typeof jsonhold is of a  javascript object.
-
-        // console.log('allitems after adding data are ', allitem);
     }
 
 
 
     const handlefilter = (list) => {
+        setprogress(30)
         console.log('our input list is : ', list);
         console.log('category filter : ', categoryfilter, 'durationfilter : ', durationfilter, 'tagfilter : ', tagfilter);
 
@@ -147,7 +153,13 @@ const ItemState = (props) => {
                 }
             }
         })
+        setprogress(70)
 
+
+
+        setTimeout(() => {
+            setprogress(100)
+        }, 600);
         setallitem(filteredData)
         console.log('filtered items are :--> ', filteredData)
     }
@@ -155,7 +167,7 @@ const ItemState = (props) => {
 
 
     // !for the loading bar progress
-    const [progress, setprogress] = useState();
+    const [progress, setprogress] = useState(30);
 
 
     // Adding iteminfo to our database
@@ -223,23 +235,22 @@ const ItemState = (props) => {
 
 
 
-    const deleteitem = async (id, showalert) => {
-        setprogress(30)
+    const deleteitem = (id, showalert) => {
+        // setprogress(30)
 
-        setprogress(80)
+        console.log('inside deleteitem');
 
-        // const newitems = item.filter((item) => { return item._id !== id })
-
-        // const allnewitems = allitem.filter((item) => { return item._id !== id })
-
-
-        // resetting the items variables to be displayed on the home screen
-
-        // we want to delete using document id
+        setTimeout(() => {
+            setprogress(50)
+        }, 100);
 
         const doctoupdate = doc(database, "items", id);
 
         const deleteditem = item.filter((item) => { return item.id == id })
+
+        setTimeout(() => {
+            setprogress(80)
+        }, 100);
 
         deleteDoc(doctoupdate)
             .then(() => {
@@ -252,8 +263,11 @@ const ItemState = (props) => {
             .catch((err) => {
                 alert(err.message)
             })
+        setTimeout(() => {
+            setprogress(100)
+        }, 100);
 
-        setprogress(100)
+
     }
 
     //context api for updating the item 
@@ -299,9 +313,6 @@ const ItemState = (props) => {
         showalert(`updation successful`, 'success')
 
         setprogress(100)
-
-
-
     }
 
 

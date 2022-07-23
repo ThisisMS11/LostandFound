@@ -28,6 +28,11 @@ const UserEnteries = (props) => {
     const ref = useRef(null);
     const refClose = useRef(null);
 
+    // confirm deletion modal
+    const confirmdeleteref = useRef(null);
+    const confirmModalcloseref = useRef(null);
+
+
     // Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink
     const [resetitem, setresetitem] = useState({ id: "", Item_Name: "", Description: "", Time: "", Place: "", Contact_No: "", Status: "", Category: "", GoogleDriveLink: "", Tag: "" });
 
@@ -36,34 +41,44 @@ const UserEnteries = (props) => {
     // to open the modal 
 
     const openmodal = (item) => {
-        console.log('the id of the item clicked is ', item.id);
+        // console.log('the id of the item clicked is ', item.id);
 
         // !here we are placing the default(current) information in the modal input boxes...
 
-
-        console.log(item)
-        // console.log('the tag is here', item.Tag)
         setresetitem({ id: item.id, Item_Name: item.Item_Name, Description: item.Description, Time: item.Time, Tag: item.Tag, Place: item.Place, Contact_No: item.Contact_No, Status: item.Status, Category: item.Category, GoogleDriveLink: item.GoogleDriveLink })
+
+        // opening on modal
         ref.current.click();
 
-        console.log(resetitem)
+    }
+
+
+    // variable for obtaining the id of the item clicked
+    const [deleteitemid, setdeleteitemid] = useState();
+
+    const openconfirmmodal = (id) => {
+        confirmdeleteref.current.click();
+        setdeleteitemid(id)
+        console.log();
     }
 
 
     // handleupdate function
     const handleupdate = () => {
         // ! here we will call the updateitem function from the context api.
-        // sequence :- id, Item_Name, Description, Place, Tag, Time, Contact_No, Status, Category, GoogleDriveLink, showalert
-        // console.log('the item after updation looks like this ', resetitem)
 
         refClose.current.click();
 
-        // console.log('category ', props.headingmaterial)
-
         // id, Item_Name, Description, Place, Tag, Time, Contact_No, Status, Category, GoogleDriveLink, showalert
 
-        // console.log('our tag is ', resettag);
         updateitem(resetitem.id, resetitem.Item_Name, resetitem.Description, resetitem.Place, resettag, resetitem.Time, resetitem.Contact_No, resetitem.Status, resetitem.Category, resetitem.GoogleDriveLink, showalert)
+    }
+
+    const handledelete = () => {
+
+        confirmModalcloseref.current.click();
+
+        deleteitem(deleteitemid, showalert)
     }
 
     const onChange = (e) => {
@@ -113,7 +128,7 @@ const UserEnteries = (props) => {
 
                                     <div className="mb-3">
                                         <label htmlFor="Time" className='mx-4'>Time</label>
-                                        <input type="datetime-local" id="Time" name="Time" onChange={onChange} value={resetitem.Time} />
+                                        <input type="date" id="Time" name="Time" onChange={onChange} value={resetitem.Time} />
                                     </div>
 
                                     <div className="mb-3">
@@ -146,6 +161,34 @@ const UserEnteries = (props) => {
 
             {/* modal code ends here */}
 
+
+            {/* confirm delete modal starts here */}
+            {/* <!-- Button trigger modal --> */}
+            <button type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" ref={confirmdeleteref}>
+                launch confirm delete
+            </button>
+
+            {/* <!-- Modal --> */}
+            <div className="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="staticBackdropLabel">Deletion Confirmation</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            do you really want to delete this item?
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" ref={confirmModalcloseref}>Cancel</button>
+                            <button type="button" className="btn btn-primary" onClick={handledelete}>Confirm delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* ends here */}
+
             <div className='container d-flex flex-wrap justify-content-center align-items-center'>
                 {
                     // !item contains all the user notes in json format
@@ -156,7 +199,7 @@ const UserEnteries = (props) => {
                                 {/* id,Item_Name, Description, Place, Time, Record_date, Contact_No, Status, Category ,showalert*/}
                                 <i className="fa-solid fa-pen-to-square dandu" data-toggle="tooltip" data-placement="top" title="update item" onClick={() => { openmodal(e) }} ></i>
 
-                                <i className="fa-solid fa-trash dandu" data-toggle="tooltip" data-placement="top" title="delete item" onClick={() => { deleteitem(e.id, showalert) }}></i>
+                                <i className="fa-solid fa-trash dandu" data-toggle="tooltip" data-placement="top" title="delete item" onClick={() => { openconfirmmodal(e.id) }}></i>
                             </div>
                         </div>
 
@@ -169,4 +212,5 @@ const UserEnteries = (props) => {
 
 export default UserEnteries
 
-// () => { updateitem(e._id, e.Item_Name, e.Description, e.Place, e.Time, e.Record_date, e.Contact_No, e.Status, e.Category, props.showalert) }
+
+// onClick={() => { deleteitem(e.id, showalert) }}
