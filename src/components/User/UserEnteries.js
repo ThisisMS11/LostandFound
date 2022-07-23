@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState, useRef } from 'react'
 import Card from '../LHS/Card'
 import itemContext from '../context/items/itemcontext'
 import Filter from '../LHS/Filter'
-import filterbox from '../styles/filterBox.css'
+import { Navigate } from 'react-router'
 
 const UserEnteries = (props) => {
 
@@ -18,9 +18,36 @@ const UserEnteries = (props) => {
     ]
 
 
+    let boxstyle = {
+        height: '522px',
+        border: "solid 1px #d5cfcf",
+        borderRadius: '10px',
+        fontSize: "33px",
+        opacity: '0.65'
+    }
+
+
+    const [ok, setOk] = useState();
+
+    const movetohome=()=>{
+        Navigate('/')
+    }
+
+
     // whenever the UserEnteries component would render itself ,code inside of the useeffect would run.
+
     useEffect(() => {
-        getitems();
+        (async () => {
+            let response = await getitems();
+            console.log('item.length => ', response.length);
+            if (response.length === 0) {
+                setOk(true);
+            }
+            else {
+                setOk(false)
+            }
+        })();
+
     }, [])
 
 
@@ -35,6 +62,8 @@ const UserEnteries = (props) => {
 
     // Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink
     const [resetitem, setresetitem] = useState({ id: "", Item_Name: "", Description: "", Time: "", Place: "", Contact_No: "", Status: "", Category: "", GoogleDriveLink: "", Tag: "" });
+
+    let username = localStorage.getItem('username');
 
 
 
@@ -183,29 +212,44 @@ const UserEnteries = (props) => {
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" ref={confirmModalcloseref}>Cancel</button>
                             <button type="button" className="btn btn-primary" onClick={handledelete}>Confirm delete</button>
                         </div>
-                    </div>
+                    </div>.
+
+
                 </div>
             </div>
 
             {/* ends here */}
 
-            <div className='container d-flex flex-wrap justify-content-center align-items-center'>
-                {
-                    // !item contains all the user notes in json format
-                    item.map((e) => {
-                        return <div className='mx-4' key={e.id}><Card imageid={giveid(e.GoogleDriveLink)} Item_Name={e.Item_Name} User={e.User} Description={e.Description} Place={e.Place} Category={e.Category} Contact_No={e.Contact_No} Status={e.Status} Record_date={e.Record_date} Time={e.Time} />
-                            <div className="d-flex justify-content-around border border-dark py-2 rounded opacity-75">
 
-                                {/* id,Item_Name, Description, Place, Time, Record_date, Contact_No, Status, Category ,showalert*/}
-                                <i className="fa-solid fa-pen-to-square dandu" data-toggle="tooltip" data-placement="top" title="update item" onClick={() => { openmodal(e) }} ></i>
+            {ok ? <div className='container d-flex flex-column align-items-center justify-content-center' style={boxstyle}>
+                <div>No Enteries</div>
+                <div>Do you want to add one? </div>
+                <button type="button" class="btn btn-success my-2" onClick={movetohome}>Click Here</button>
 
-                                <i className="fa-solid fa-trash dandu" data-toggle="tooltip" data-placement="top" title="delete item" onClick={() => { openconfirmmodal(e.id) }}></i>
+            </div> :
+                <div className='container d-flex flex-wrap justify-content-center align-items-center'>
+                    {
+                        // !item contains all the user notes in json format
+                        item.map((e) => {
+                            return <div className='mx-4' key={e.id}><Card imageid={giveid(e.GoogleDriveLink)} Item_Name={e.Item_Name} User={e.User} Description={e.Description} Place={e.Place} Category={e.Category} Contact_No={e.Contact_No} Status={e.Status} Record_date={e.Record_date} Time={e.Time} />
+                                <div className="d-flex justify-content-around border border-dark py-2 rounded opacity-75">
+
+                                    {/* id,Item_Name, Description, Place, Time, Record_date, Contact_No, Status, Category ,showalert*/}
+                                    <i className="fa-solid fa-pen-to-square dandu" data-toggle="tooltip" data-placement="top" title="update item" onClick={() => { openmodal(e) }} ></i>
+
+                                    <i className="fa-solid fa-trash dandu" data-toggle="tooltip" data-placement="top" title="delete item" onClick={() => { openconfirmmodal(e.id) }}></i>
+                                </div>
                             </div>
-                        </div>
 
-                    })
-                }
-            </div>
+                        })
+                    }
+                </div>
+
+            }
+
+
+
+
         </>
     )
 }

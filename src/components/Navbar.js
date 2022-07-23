@@ -47,6 +47,7 @@ const Navbar = (props) => {
 
                 localStorage.setItem('token', data.user.accessToken);
                 localStorage.setItem('userid', data._tokenResponse.localId);
+                localStorage.setItem('username', data._tokenResponse.displayName);
 
                 alert('sign up successful')
                 props.showalert(`${data._tokenResponse.displayName} , Welcome to Lost&Found@IIITDMJ `, 'success')

@@ -51,6 +51,19 @@ const ItemState = (props) => {
     //! variable for all user's all notes to be displayed on the CardsBox.js
     const [allitem, setallitem] = useState([]);
 
+
+    //! this variable is for toggeling between no enteries div and cardbox component in ItemMainBox
+    const [displaydecider, setDisplaydecider] = useState(true);
+
+
+    // !for the loading bar progress
+    const [progress, setprogress] = useState(30);
+
+
+
+
+    //------------------------------------------------------------------------<<<<<<<<<<<<<<<<<<
+
     const giveid = (link) => {
 
         if (link = '') {
@@ -102,6 +115,34 @@ const ItemState = (props) => {
         }
     }
 
+    const handlefilter = (list) => {
+        setprogress(30)
+        console.log('our input list is : ', list);
+        console.log('category filter : ', categoryfilter, 'durationfilter : ', durationfilter, 'tagfilter : ', tagfilter);
+
+        let filteredData = [];
+        let count = 0;
+
+        list.map((e) => {
+            if (e.Category == categoryfilter || categoryfilter == 'All') {
+                if (e.Tag == tagfilter || tagfilter == 'All') {
+                    if (givedatediff(e.Record_date, durationfilter) || durationfilter == 'All Time') {
+                        filteredData[count] = e;
+                        count++;
+                    }
+
+                }
+            }
+        })
+        setprogress(70)
+
+        setTimeout(() => {
+            setprogress(100)
+        }, 600);
+        setallitem(filteredData)
+        console.log('filtered items are :--> ', filteredData)
+    }
+
     // fetchallitems available in the database
 
     const getallitems = async () => {
@@ -126,49 +167,12 @@ const ItemState = (props) => {
         //typeof jsonhold is of a  javascript object.
         setallitem(jsonhold)
 
-        console.log('jsonhold => ', jsonhold);
+        // console.log('jsonhold => ', jsonhold);
         setprogress(100)
+
 
         return jsonhold;
     }
-
-
-
-    const handlefilter = (list) => {
-        setprogress(30)
-        console.log('our input list is : ', list);
-        console.log('category filter : ', categoryfilter, 'durationfilter : ', durationfilter, 'tagfilter : ', tagfilter);
-
-        let filteredData = [];
-        let count = 0;
-
-        list.map((e) => {
-            if (e.Category == categoryfilter || categoryfilter == 'All') {
-                if (e.Tag == tagfilter || tagfilter == 'All') {
-                    if (givedatediff(e.Record_date, durationfilter) || durationfilter == 'All Time') {
-                        filteredData[count] = e;
-                        count++;
-                    }
-
-                }
-            }
-        })
-        setprogress(70)
-
-
-
-        setTimeout(() => {
-            setprogress(100)
-        }, 600);
-        setallitem(filteredData)
-        console.log('filtered items are :--> ', filteredData)
-    }
-
-
-
-    // !for the loading bar progress
-    const [progress, setprogress] = useState(30);
-
 
     // Adding iteminfo to our database
     const additem = async (Item_Name, Description, Tag, Place, Time, Contact_No, Status, Category, GoogleDriveLink, showalert) => {
@@ -176,6 +180,7 @@ const ItemState = (props) => {
         setprogress(30)
 
         console.log('additem triggered here');
+
 
         let newitem = {
             Item_Name: Item_Name,
@@ -222,7 +227,6 @@ const ItemState = (props) => {
         let count = 0;
 
         querySnapshot.forEach((doc) => {
-            // return { ...item.data(), id: item.id };
             jsonhold[count] = { ...doc.data(), id: doc.id };
             count++;
         });
@@ -230,6 +234,8 @@ const ItemState = (props) => {
         setitem(jsonhold)
 
         setprogress(100)
+
+        return jsonhold;
 
     }
 
@@ -317,7 +323,7 @@ const ItemState = (props) => {
 
 
     return (
-        <ItemContext.Provider value={{ additem, tag, setTag, getitems, item, allitem, getallitems, deleteitem, updateitem, resettag, setResettag, giveid, categoryfilter, setcategoryfilter, durationfilter, setdurationfilter, tagfilter, settagfilter, progress, setprogress, setallitem, handlefilter, signupRef }}>
+        <ItemContext.Provider value={{ additem, tag, setTag, getitems, item, allitem, getallitems, deleteitem, updateitem, resettag, setResettag, giveid, categoryfilter, setcategoryfilter, durationfilter, setdurationfilter, tagfilter, settagfilter, progress, setprogress, setallitem, handlefilter, signupRef, displaydecider, setDisplaydecider }}>
             {props.children}
         </ItemContext.Provider>
     )

@@ -16,10 +16,14 @@ const CardsBox = () => {
 
   // !fetching all the notes here
   // whenever getallitems would change anywhere in the react app this useeffect would trigger itself.
-  useEffect(() => {
-    // mohit();
-    getallitems();
-  }, [])
+
+  // **************
+  // useEffect(() => {
+  //   // mohit();
+  //   getallitems();
+
+  //   console.log('inside cardbox checking no enteries div');
+  // }, [])
 
   // console.log('here are all the items',allitem);
 
@@ -34,6 +38,8 @@ const CardsBox = () => {
 
 
   return (
+
+
     <div className=' container d-flex my-4 justify-content-center flex-wrap overflow-auto scroller-design' style={boxstyle}>
 
       {/* Iterating the cards information here */}
