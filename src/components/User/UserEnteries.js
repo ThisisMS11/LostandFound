@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState, useRef } from 'react'
 import Card from '../LHS/Card'
 import itemContext from '../context/items/itemcontext'
 import Filter from '../LHS/Filter'
-import { Navigate } from 'react-router'
+import { Navigate, useNavigate } from 'react-router'
 
 const UserEnteries = (props) => {
 
@@ -29,8 +29,10 @@ const UserEnteries = (props) => {
 
     const [ok, setOk] = useState();
 
-    const movetohome=()=>{
-        Navigate('/')
+    const navigate = useNavigate();
+
+    const movetohome = () => {
+        navigate('/')
     }
 
 
@@ -223,7 +225,7 @@ const UserEnteries = (props) => {
 
             {ok ? <div className='container d-flex flex-column align-items-center justify-content-center' style={boxstyle}>
                 <div>No Enteries</div>
-                <div>Do you want to add one? </div>
+                <div className='text-center'>Do you want to add one? </div>
                 <button type="button" class="btn btn-success my-2" onClick={movetohome}>Click Here</button>
 
             </div> :

@@ -16,32 +16,23 @@
     ></script>
   </head>
   <body>
-    <input
-      type="checkbox"
-      id="vehicle1"
-      name="vehicle1"
-      onclick="handlechange()"
-      value="delivered"
-    />
-
-    <div id="display">off</div>
-
-    <script>
-      const checkbox = document.getElementById("vehicle1");
-      how are you 
-
-      const display = document.getElementById("display");
-
-      const handlechange = () => {
-        console.log("the checkbox.value => \n", checkbox.value);
-        if (checkbox.value == "delivered") {
-          display.innerText = "delivered";
-          return;
-        }
-        display.innerText = " not delivered";
-      };
-    </script>
+    <div id="display">hello mohit saini</div>
+    <button onclick="fetchstatus()">fetch data</button>
   </body>
+
+  <script>
+    const fetchstatus = async () => {
+      const response = await fetch(
+        "https://drive.google.com/uc?export=view&id=14way_dVImUuU-1eVMd85LWhSONYyjPDW",
+        {
+          method: "GET",
+        }
+      );
+      console.log(response.status)
+      const json = await response.json();
+      document.getElementById("display").innerText = json;
+    };
+  </script>
 </html>
 
 <!-- https://drive.google.com/file/d/144Rsd4FUiPGn1WyNC6ku-rB5bM6dssWt/view?usp=sharing -->
