@@ -11,7 +11,7 @@ const UserEnteries = (props) => {
     let { showalert } = props;
 
     const context = useContext(itemContext);
-    let { getitems, item, deleteitem, updateitem, resettag, giveid, statushelp } = context;
+    let { getitems, item, deleteitem, updateitem, resettag, giveid } = context;
 
     // improvement can be there but for now 
     let dropdownoptions = [
@@ -52,7 +52,6 @@ const UserEnteries = (props) => {
         })();
 
 
-        statushelp();
     }, [])
 
 

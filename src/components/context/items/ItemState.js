@@ -11,7 +11,7 @@ const ItemState = (props) => {
 
     // creating state for tag input
 
-    // ? for the record time of our new item
+    // ? for the recodate_string time of our new item
     const currentTime = new Date();
     const localtime = currentTime.toLocaleString();
 
@@ -48,11 +48,11 @@ const ItemState = (props) => {
     //! variable for handling user specific notes in UserEnteries.js
     const [item, setitem] = useState(iteminitial)
 
-    //! variable for all user's all notes to be displayed on the CardsBox.js
+    //! variable for all user's all notes to be displayed on the Cadate_stringsBox.js
     const [allitem, setallitem] = useState([]);
 
 
-    //! this variable is for toggeling between no enteries div and cardbox component in ItemMainBox
+    //! this variable is for toggeling between no enteries div and cadate_stringbox component in ItemMainBox
     const [displaydecider, setDisplaydecider] = useState(true);
 
 
@@ -89,12 +89,35 @@ const ItemState = (props) => {
 
     //! for filtering the data based on last x days
     const givedatediff = (date_string, lastxdays) => {
-        const x = Number(lastxdays.slice(5, 7));
-        const d1 = Number(date_string.slice(0, 2));
-        const m1 = Number(date_string.slice(3, 4));
-        const y1 = Number(date_string.slice(5, 9));
 
-        // console.log('record date', m1, d1, y1)
+        // console.log(
+        //     'date string :', date_string
+        // );
+        const x = Number(lastxdays.slice(5, 7));
+
+        // mm/dd/yy
+        // holddate holds the string format of the recorded day,month and the year individually.
+        const holddate = ['', '', ''];
+        let counter = 0;
+
+        // mm/dd/yy
+        for (let i = 0; i < date_string.length; i++) {
+            const s = date_string[i];
+            if (s != '/' && s != ',') {
+                holddate[counter] += s;
+            }
+            else if (s == ',') {
+                break;
+            }
+            else {
+                counter++;
+            }
+        }
+        const m1 = Number(holddate[0]);
+        const d1 = Number(holddate[1]);
+        const y1 = Number(holddate[2]);
+
+        // console.log('recodate_string date', m1, d1, y1)
 
         const currentTime = new Date();
         const month = currentTime.getMonth() + 1;
@@ -105,20 +128,21 @@ const ItemState = (props) => {
         // mm/dd/yy
         const Date1 = new Date(`${m1}/${d1}/${y1}`);
         const Date2 = new Date(`${month}/${day}/${year}`);
-        const diffTime = Math.abs(Date1 - Date2);
+        const diffTime = Math.abs(Date2 - Date1);
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-        // console.log('the difference is ', diffDays);
+        console.log('the difference is ', diffDays);
         // suppose the difference has to be lesser than the last x days
         // diffDays<=x
         if (diffDays <= x) {
             return true;
         }
+        return false;
     }
 
     const handlefilter = (list) => {
         setprogress(30)
-        console.log('our input list is : ', list);
-        console.log('category filter : ', categoryfilter, 'durationfilter : ', durationfilter, 'tagfilter : ', tagfilter);
+        // console.log('our input list is : ', list);
+        // console.log('category filter : ', categoryfilter, 'durationfilter : ', durationfilter, 'tagfilter : ', tagfilter);
 
         let filteredData = [];
         let count = 0;
@@ -126,6 +150,9 @@ const ItemState = (props) => {
         list.map((e) => {
             if (e.Category == categoryfilter || categoryfilter == 'All') {
                 if (e.Tag == tagfilter || tagfilter == 'All') {
+
+                    console.log(' recorded date = ', e.Record_date, 'givedatediff ==> ', givedatediff(e.Record_date, durationfilter));
+
                     if (givedatediff(e.Record_date, durationfilter) || durationfilter == 'All Time') {
                         filteredData[count] = e;
                         count++;
@@ -133,12 +160,14 @@ const ItemState = (props) => {
 
                 }
             }
+            console.log('---------------->>>');
         })
         setprogress(70)
 
         setTimeout(() => {
             setprogress(100)
         }, 600);
+
         setallitem(filteredData)
         console.log('filtered items are :--> ', filteredData)
     }
@@ -182,6 +211,16 @@ const ItemState = (props) => {
         console.log('additem triggered here');
 
 
+        // if tag found undefined then it will have general as the default category
+        if (tag == undefined) {
+            tag = 'general'
+        }
+
+        if(Description===''){
+            Description='No Description Provided'
+        }
+
+
         let newitem = {
             Item_Name: Item_Name,
             Description: Description,
@@ -196,7 +235,7 @@ const ItemState = (props) => {
             GoogleDriveLink: GoogleDriveLink
         }
 
-        addDoc(collectionRef, newitem)
+        await addDoc(collectionRef, newitem)
             .then((response) => {
                 console.log('our new item added is ', response)
                 setprogress(80)
@@ -322,20 +361,9 @@ const ItemState = (props) => {
     }
 
 
-    // response tester
-    const statushelp = async () => {
-        const response = await fetch("https://drive.google.com/uc?export=view&id=14way_dVImUuU-1eVMd85LWhSONYyjPDW", {
-            method: "GET"
-        });
-        // const json = await response.json();
-
-        console.log(response);
-        console.log('our main status is *******', response.status);
-    }
-
 
     return (
-        <ItemContext.Provider value={{ additem, tag, setTag, getitems, item, allitem, getallitems, deleteitem, updateitem, resettag, setResettag, giveid, categoryfilter, setcategoryfilter, durationfilter, setdurationfilter, tagfilter, settagfilter, progress, setprogress, setallitem, handlefilter, signupRef, displaydecider, setDisplaydecider, statushelp }}>
+        <ItemContext.Provider value={{ additem, tag, setTag, getitems, item, allitem, getallitems, deleteitem, updateitem, resettag, setResettag, giveid, categoryfilter, setcategoryfilter, durationfilter, setdurationfilter, tagfilter, settagfilter, progress, setprogress, setallitem, handlefilter, signupRef, displaydecider, setDisplaydecider, }}>
             {props.children}
         </ItemContext.Provider>
     )

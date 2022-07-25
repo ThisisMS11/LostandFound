@@ -72,10 +72,10 @@ const Itemform = (props) => {
         <>
             <h2 className="text-center my-2">{headingmaterial} Something</h2>
             <div>
-                <form >
+                <form action='/'>
                     <div className="mb-3">
                         <label htmlFor="Item_Name" className="form-label">Item Name</label>
-                        <input type="text" className="form-control" id="Item_Name" aria-describedby="emailHelp" name='Item_Name' onChange={onChange} />
+                        <input type="text" className="form-control" id="Item_Name" aria-describedby="emailHelp" name='Item_Name' onChange={onChange} required minLength={5} />
                     </div>
 
                     <div className="mb-3">
@@ -113,8 +113,8 @@ const Itemform = (props) => {
                             <input type="checkbox" className="form-check-input" id="exampleCheck1" name="Status" onChange={onChange} value="delivered" />
                         </div>
 
+                        <button type="submit" className="btn btn-primary " disabled={item.Item_Name.length < 5 || item.Place.length < 5 || item.Contact_No.length !== 10} onClick={handlesubmit}>Add </button>
 
-                        <button type="submit" className="btn btn-primary" onClick={handlesubmit}>Submit</button>
                     </div>
 
 

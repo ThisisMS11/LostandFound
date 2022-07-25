@@ -25,7 +25,7 @@ const Filterbox = () => {
 
   let dropdownoptions = [
     ['All', 'Lost', 'Found'],
-    ['All Time', 'last 1 day', 'last 3 days', 'last 5 days', 'last 10 days'],
+    ['All Time', 'last 1 day (today)', 'last 3 days', 'last 5 days', 'last 10 days'],
     // add further filter tags here only....
     ['All', 'general', 'smartphones', 'documents', 'clothing', 'electronics', 'money']
   ]
