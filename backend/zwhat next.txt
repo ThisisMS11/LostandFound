@@ -1,1 +1,0 @@
-creating the structure of the card that would contain the data about the lost item thanx.
